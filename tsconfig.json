@@ -1,0 +1,17 @@
+{
+	"compilerOptions": {
+		"noImplicitAny": false,
+		"noEmitOnError": true,
+		"removeComments": false,
+		"sourceMap": true,
+		"target": "es2020",
+		"outDir": "./build",
+		"module": "es2020",
+		"moduleResolution": "node",
+		"importHelpers": false,
+		"esModuleInterop": true,
+	},
+	"include": [
+		"src/**/*"
+	],
+}

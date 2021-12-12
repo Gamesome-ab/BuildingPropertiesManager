@@ -1,0 +1,34 @@
+{
+	"name": "building-properties-manager",
+	"version": "1.0.0",
+	"description": "manager for structured building properties - based on IFC, but highly simplified. Should convert nicely both ways though.",
+	"exports": "./build/cli.js",
+	"type": "module",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "tsc --build",
+		"start": "npx tsc && node ./build/cli.js interactive",
+		"cli": "npx tsc && node ./build/cli.js"
+	},
+	"author": "Johan Svensson",
+	"license": "MIT",
+	"devDependencies": {
+		"@types/lodash": "^4.14.177",
+		"@types/node": "^16.11.7",
+		"@types/yargs": "^17.0.5",
+		"@typescript-eslint/eslint-plugin": "^5.3.1",
+		"@typescript-eslint/parser": "^5.3.1",
+		"eslint": "^8.2.0",
+		"eslint-config-google": "^0.14.0",
+		"eslint-config-prettier": "^8.3.0",
+		"prettier": "2.4.1",
+		"typescript": "^4.4.4"
+	},
+	"dependencies": {
+		"ansi-colors-es6": "^5.0.0",
+		"enquirer": "^2.3.6",
+		"lodash": "^4.17.21",
+		"lowdb": "^3.0.0",
+		"yargs": "^17.2.1"
+	}
+}

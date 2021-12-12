@@ -1,0 +1,60 @@
+{
+    "editor.tabSize": 4,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    "editor.formatOnSave": true,
+    "[javascript]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.formatOnPaste": true,
+    "cSpell.words": [
+        "ABSORBEDDOSEUNIT",
+        "AMOUNTOFSUBSTANCEUNIT",
+        "AREAUNIT",
+        "ATTO",
+        "CENTI",
+        "DECA",
+        "DECI",
+        "DOSEEQUIVALENTUNIT",
+        "ELECTRICCAPACITANCEUNIT",
+        "ELECTRICCHARGEUNIT",
+        "ELECTRICCONDUCTANCEUNIT",
+        "ELECTRICCURRENTUNIT",
+        "ELECTRICRESISTANCEUNIT",
+        "ELECTRICVOLTAGEUNIT",
+        "ENERGYUNIT",
+        "FEMTO",
+        "FORCEUNIT",
+        "FREQUENCYUNIT",
+        "GIGA",
+        "HECTO",
+        "ILLUMINANCEUNIT",
+        "INDUCTANCEUNIT",
+        "LENGTHUNIT",
+        "LUMINOUSFLUXUNIT",
+        "LUMINOUSINTENSITYUNIT",
+        "MAGNETICFLUXDENSITYUNIT",
+        "MAGNETICFLUXUNIT",
+        "MASSUNIT",
+        "MILLI",
+        "partOfPset",
+        "PETA",
+        "PICO",
+        "PLANEANGLEUNIT",
+        "POWERUNIT",
+        "PRESSUREUNIT",
+        "Pset",
+        "RADIOACTIVITYUNIT",
+        "SOLIDANGLEUNIT",
+        "TERA",
+        "THERMODYNAMICTEMPERATUREUNIT",
+        "TIMEUNIT",
+        "USERDEFINED",
+        "VOLUMEUNIT"
+    ]
+}
