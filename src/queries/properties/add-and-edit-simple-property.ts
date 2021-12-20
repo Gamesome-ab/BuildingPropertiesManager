@@ -1,21 +1,24 @@
 import E from 'enquirer';
 import colors from 'ansi-colors';
+import _ from 'lodash';
+
 import {enquirerPromptWrapper as promptWrapper} from '../../helpers/prompt-helpers.js';
 import {handleManageProperties} from './manage-properties.js';
 import {SimplePropertyRepository} from '../../data/simple-property-repository.js';
 import {Identifier} from '../../data/models/value/simple-value/identifier.js';
 import {Text} from '../../data/models/value/simple-value/text.js';
-import {
-	SimpleValueExtension,
-	SimpleValueExtensionType,
-} from '../../data/models/value/simple-value/simple-value-extension.js';
 import {PropertySingleValue} from '../../data/models/property/simple-property/property-single-value.js';
 import {
 	SimplePropertyExtension,
 	SimplePropertyExtensionType,
 } from '../../data/models/property/simple-property/simple-property-extension.js';
 import {SimpleProperty} from '../../data/models/property/simple-property/simple-property.js';
-import _ from 'lodash';
+import {Value} from '../../data/models/value/value.js';
+import {handleAddAndEditValue} from '../value/add-and-edit-value.js';
+import {SimpleValue} from '../../data/models/value/simple-value/simple-value.js';
+import {selectPropertyEnumerationPrompt} from './select-property-enumeration.js';
+import {PropertyEnumeration} from '../../data/models/property/property-enumeration.js';
+import {PropertyEnumeratedValue} from '../../data/models/property/simple-property/property-enumerated-value.js';
 
 const {Select, Input, Confirm} = E as any;
 
@@ -40,23 +43,6 @@ const selectSimplePropertyExtensionPrompt = async (
 	return await prompt.run();
 };
 
-const selectSingleValueExtensionPrompt = async (old?: string): Promise<SimpleValueExtensionType> => {
-	const prompt = new Select({
-		type: 'select',
-		name: 'name',
-		message: 'What type of SimpleValue should the property hold?',
-		choices: Object.keys(SimpleValueExtension)
-			.map( (key) => ({
-				name: old === key ? colors.yellow(key) : key,
-				value: key,
-				hint: key,
-			})),
-		required: true,
-
-	});
-
-	return await prompt.run();
-};
 
 const nameSimplePropertyPrompt = async (
 	simplePropertySubType: SimplePropertyExtensionType,
@@ -127,13 +113,11 @@ const describeSimplePropertyPrompt = async (
 };
 
 const confirmSimplePropertyPrompt = async (
-	simplePropertySubType: SimplePropertyExtensionType,
-	propertyName: Identifier,
-	description: Text,
+	simpleProperty: SimpleProperty,
 ): Promise<boolean> => {
 	const firstMessageLine = `Property will be saved with this data:`;
-	const secondMessageLine = `${simplePropertySubType}: ${propertyName.value}`;
-	const thirdMessageLine = `Description: ${description.value}`;
+	const secondMessageLine = `${simpleProperty.type}: ${simpleProperty.name.value}`;
+	const thirdMessageLine = `Description: ${simpleProperty.description.value}`;
 	const fourthMessageLine = `Is this correct?`;
 
 	const prompt = new Confirm({
@@ -147,9 +131,9 @@ const confirmSimplePropertyPrompt = async (
 
 export const handleAddSimpleProperty = async (
 	simplePropertyExtensionType: SimplePropertyExtensionType = null,
-	simpleValueExtensionType: SimpleValueExtensionType = null,
 	propertyName : Identifier = null,
 	description : Text = null,
+	simpleProperty: SimpleProperty = null,
 	currentPromptStep: number = 0,
 ): Promise<SimpleProperty | void> => {
 	if (currentPromptStep === 0) {
@@ -166,22 +150,6 @@ export const handleAddSimpleProperty = async (
 		currentPromptStep ++;
 	}
 	if (currentPromptStep === 1) {
-		simpleValueExtensionType = await promptWrapper(
-			selectSingleValueExtensionPrompt(simpleValueExtensionType),
-		);
-		if (!(simpleValueExtensionType && Object.keys(SimpleValueExtension).includes(simpleValueExtensionType))) {
-			// request was probably cancelled, go back to the previous step
-			return handleAddSimpleProperty(
-				simplePropertyExtensionType,
-				simpleValueExtensionType,
-				propertyName,
-				description,
-				currentPromptStep - 1,
-			);
-		}
-		currentPromptStep ++;
-	}
-	if (currentPromptStep === 2) {
 		propertyName = await promptWrapper(
 			nameSimplePropertyPrompt(simplePropertyExtensionType, propertyName),
 		);
@@ -189,15 +157,15 @@ export const handleAddSimpleProperty = async (
 			// request was probably cancelled. go back to the previous prompt.
 			return handleAddSimpleProperty(
 				simplePropertyExtensionType,
-				simpleValueExtensionType,
 				propertyName,
 				description,
+				simpleProperty,
 				currentPromptStep - 1,
 			);
 		}
 		currentPromptStep ++;
 	}
-	if (currentPromptStep === 3) {
+	if (currentPromptStep === 2) {
 		description = await promptWrapper(
 			describeSimplePropertyPrompt(simplePropertyExtensionType, propertyName),
 		);
@@ -205,9 +173,72 @@ export const handleAddSimpleProperty = async (
 			// request was probably cancelled. go back to the previous prompt.
 			return handleAddSimpleProperty(
 				simplePropertyExtensionType,
-				simpleValueExtensionType,
 				propertyName,
 				description,
+				simpleProperty,
+				currentPromptStep - 1,
+			);
+		}
+		currentPromptStep ++;
+	}
+	if (currentPromptStep === 3) {
+		const back = () => {
+			return handleAddSimpleProperty(
+				simplePropertyExtensionType,
+				propertyName,
+				description,
+				simpleProperty,
+				currentPromptStep - 1,
+			);
+		};
+
+		if (simplePropertyExtensionType === 'PropertySingleValue') {
+			const value: Value = await promptWrapper(
+				handleAddAndEditValue(
+					false,
+					simpleProperty?.type === 'PropertySingleValue' ?
+						(simpleProperty as PropertySingleValue).nominalValue as SimpleValue<any>:
+						null,
+				),
+				null,
+				back,
+			);
+			// TODO: allow to set unit
+			if (value) {
+				simpleProperty = new PropertySingleValue(
+					propertyName,
+					description,
+					value,
+					null,
+				);
+			}
+		} else if (simplePropertyExtensionType === 'PropertyEnumeratedValue') {
+			const enumeration: PropertyEnumeration = await promptWrapper(
+				selectPropertyEnumerationPrompt(
+					simpleProperty?.type === 'PropertyEnumeratedValue' ?
+						(simpleProperty as PropertyEnumeratedValue).enumerationReference:
+						null,
+				),
+			);
+
+			if (enumeration) {
+				simpleProperty = new PropertyEnumeratedValue(
+					propertyName,
+					description,
+					enumeration.asPropertyEnumerationReference(),
+				);
+			}
+		} else {
+			throw new Error('not implemented');
+		}
+
+		if (!simpleProperty) {
+			// request was cancelled or we got a bad value, go back to the previous step
+			return handleAddSimpleProperty(
+				simplePropertyExtensionType,
+				propertyName,
+				description,
+				simpleProperty,
 				currentPromptStep - 1,
 			);
 		}
@@ -215,32 +246,25 @@ export const handleAddSimpleProperty = async (
 	}
 	if (currentPromptStep === 4) {
 		const confirm = await promptWrapper(
-			confirmSimplePropertyPrompt(simplePropertyExtensionType, propertyName, description),
+			confirmSimplePropertyPrompt(simpleProperty),
 		);
 		if (!confirm) {
 			// request was probably cancelled. go back to the previous prompt.
 			return handleAddSimpleProperty(
 				simplePropertyExtensionType,
-				simpleValueExtensionType,
 				propertyName,
 				description,
+				simpleProperty,
 				currentPromptStep - 1,
 			);
 		}
 	}
 
-	const newProperty = new PropertySingleValue(
-		propertyName,
-		description,
-		new SimpleValueExtension[simpleValueExtensionType](),
-		null,
-	);
-
 	const repo = new SimplePropertyRepository();
 
-	await repo.add(newProperty);
+	await repo.add(simpleProperty);
 
-	return newProperty;
+	return simpleProperty;
 };
 
 export const handleEditSimpleProperty = async (

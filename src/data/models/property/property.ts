@@ -71,11 +71,3 @@ export class PropertyReference {
 	}
 }
 export interface PropertyReference extends Omit<Property, 'partOfPset' | 'partOfComplex' | 'description'> {}
-
-
-/* eslint-disable no-unused-vars */
-export enum PropertySubTypes { // TODO: should be possible values for type on Property
-	SimpleProperty = 'SimpleProperty',
-     // TODO: ComplexProperty
-}
-/* eslint-enable */

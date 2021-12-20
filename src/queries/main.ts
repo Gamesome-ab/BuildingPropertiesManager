@@ -10,7 +10,7 @@ export enum MainAction {
 	/* eslint-disable */
 	PROPERTY_SETS = "Property sets",
 	PROPERTIES = "Properties",
-	ENTITIES = "Entities",
+	// ENTITIES = "Entities",
 	QUIT = "QUIT"
 	/* eslint-enable */
 }

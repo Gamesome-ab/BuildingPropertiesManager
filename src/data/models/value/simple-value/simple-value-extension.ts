@@ -7,6 +7,8 @@ import {Text} from './text.js';
 
 /**
  * helper constant to allow creating value-entities with new SimpleValueExtension\[simpleValueExtensionType\]()
+ *
+ * or with value as Reflect.construct(SimpleValueExtension\[simpleValueExtensionType\], [value])
  */
 export const SimpleValueExtension = {
 	Binary,

@@ -35,7 +35,7 @@ export class PropertySetRepository {
 
 	/**
      * get one PropertySet (even though all is fetched)
-	 * @param  {string} propertySet
+	 * @param  {PropertySet | IPropertySet} propertySet
 	 * @return {Promise<PropertySet>} a PropertySet
 	 */
 	public async get(propertySet: PropertySet | IPropertySet): Promise<PropertySet> {
@@ -81,11 +81,13 @@ export class PropertySetRepository {
 		).value();
 
 		const simplePropertyRepository = new SimplePropertyRepository();
-		await simplePropertyRepository.onRelatedEntityRename(
-			'PropertySet',
-			oldPropertySet.name.value.toString(),
-			newPropertySet.name.value.toString(),
-		);
+		if (oldPropertySet.name.value.toString() !== newPropertySet.name.value.toString()) {
+			await simplePropertyRepository.onRelatedEntityRename(
+				'PropertySet',
+				oldPropertySet.name.value.toString(),
+				newPropertySet.name.value.toString(),
+			);
+		}
 
 		await this.db.write();
 
@@ -149,7 +151,6 @@ export class PropertySetRepository {
 
 		// TODO: be smarter when checking for success
 		if (removed.length === 1) {
-			// TODO: also remove referenced entities
 			const simplePropertyRepository = new SimplePropertyRepository();
 			await simplePropertyRepository.onRelatedEntityDelete(
 				'PropertySet',

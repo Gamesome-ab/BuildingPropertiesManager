@@ -6,6 +6,8 @@ import {
 } from '../../data/models/property/simple-property/simple-property-extension.js';
 import {SimpleProperty} from '../../data/models/property/simple-property/simple-property.js';
 
+import {Logger} from '../../helpers/prompt-helpers.js';
+
 const {Select} = E as any;
 
 type SelectSimplePropertyExtensionActionType = SimplePropertyExtensionType | 'All' | 'Back'
@@ -42,7 +44,8 @@ const selectSimplePropertyPrompt = async (
 		await simplePropertyRepository.getAllOfSubType(extensionType);
 
 	if (properties.length === 0) {
-		throw new Error('No property sets found');
+		Logger.warn('No simple properties found');
+		return null;
 	}
 
 	if (properties.length >= 1) {
@@ -54,16 +57,15 @@ const selectSimplePropertyPrompt = async (
 			choices: properties.map((p) => ({
 				name: `${p.name.value}`,
 				value: p.name.value,
-				hint: `${extensionType === 'All' ? p.type + ' ' : ''}with parameters: ${p.valuesToLegibleString}`,
+				hint: `${extensionType === 'All' ? p.type + ' ' : ''} [${p.valuesToLegibleString}]`,
 			})),
 			result(res) {
 				// NOTE: See https://github.com/enquirer/enquirer/blob/8d626c206733420637660ac7c2098d7de45e8590/examples/multiselect/option-result.js
 				// for relevant example. Had to dig in to get to the bottom of this.
 				// If we do not do this, it's pretty much impossible to maintain
 				// user-friendly display names in options and confirms.
-
-				const displayNameToName: {string: string} = this.map(res);
-				const name: string = displayNameToName[res];
+				const choiceNameToValueDict: {string: string} = this.map(res);
+				const name: string = choiceNameToValueDict[res];
 				const property = properties.find((p) => p.name.value === name);
 				// TODO: Error handling
 				return property;
@@ -83,9 +85,16 @@ const selectSimplePropertyPrompt = async (
 
 export const handleSelectSimpleProperty = async (): Promise<SimpleProperty> => {
 	const extensionType = await selectSimplePropertyTypeExtensionPrompt();
+
 	if (extensionType === 'Back') {
 		return null;
 	}
+	try {
+		const property = await selectSimplePropertyPrompt(extensionType);
 
-	return await selectSimplePropertyPrompt(extensionType);
+		return property;
+	} catch (e) {
+		Logger.warn('e', e);
+		return null;
+	}
 };

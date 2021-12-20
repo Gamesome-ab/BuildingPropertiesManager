@@ -10,6 +10,7 @@ export abstract class SimpleProperty extends Property implements ISimpleProperty
 export interface ISimpleProperty extends Property {
     /**
      * helper function to describe any of the extending classes values
+     *
      * not part of IFC specification
      * @abstract
      */

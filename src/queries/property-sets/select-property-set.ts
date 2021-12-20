@@ -39,12 +39,12 @@ export const selectPropertySetPrompt = async (
 				// If we do not do this, it's pretty much impossible to maintain
 				// user-friendly display names in options and confirms.
 
-				const displayNameToName: {string: string} = this.map(res);
+				const choiceNameToValueDict: {string: string} = this.map(res);
 				if (multiSelect) {
 					const selectedPropSets = pSets.filter((pSet) => res.includes(pSet.name.value));
 					return selectedPropSets;
 				} else {
-					const name: string = displayNameToName[res];
+					const name: string = choiceNameToValueDict[res];
 					const pSet = pSets.find((pSet) => pSet.name.value === name);
 					// TODO: Error handling
 					return pSet;

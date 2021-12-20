@@ -13,7 +13,7 @@ export const handleAddPropertySet = async (
 	currentPromptStep: number = 0,
 ): Promise<PropertySet | void> => {
 	currentlyEditing = currentlyEditing ? currentlyEditing : new PropertySet(
-		new Label('BBR29_SomePsetName'),
+		new Label('Pset_SomePsetName'),
 		new Text('Some explicit description of what this will contain and how it will be used'),
 	);
 
@@ -49,7 +49,7 @@ export const handleEditPropertySet = async (
 	currentPromptStep: number = 0,
 ): Promise<PropertySet | void> => {
 	currentlyEditing = currentlyEditing ? currentlyEditing : _.cloneDeep(oldPropertySet);
-	const namePromptFirstMessageLine = `Choose a new name for ${currentlyEditing.name}`;
+	const namePromptFirstMessageLine = `Choose a new name for ${currentlyEditing.name.value}`;
 
 	if (currentPromptStep === 0) {
 		const name = await namePropertySetPrompt(currentlyEditing, namePromptFirstMessageLine);
@@ -110,7 +110,7 @@ const namePropertySetPrompt = async (
 ): Promise<Label> => {
 	const propertySetRepository = new PropertySetRepository();
 	const pSets = await propertySetRepository.getAll();
-	const pSetNames = pSets.map((pSet) => pSet.name.value);
+	const pSetNames = pSets.map((pSet) => pSet.name.value.toString());
 
 	const prompt = new Input({
 		message:
@@ -119,12 +119,15 @@ const namePropertySetPrompt = async (
             'It should begin with something that is not Pset_, but contains an underscore',
 		name: 'pset_name',
 		initial: editablePropertySet.name.value,
-		validate: (value) => {
+		validate: (value: string) => {
 			if (value.length < 1) {
 				return prompt.styles.danger('you must submit a name for the property set');
 			}
-			if (value.includes('Pset_') || value.includes('pset_')) {
-				return prompt.styles.danger('the name cannot contain Pset_ or pset_');
+			if (value.length >= 255) {
+				return prompt.styles.danger('name can\'t be more than 255 characters long');
+			}
+			if (value.startsWith('Pset_') || value.startsWith('pset_')) {
+				return prompt.styles.danger('the name cannot start with Pset_ or pset_');
 			}
 			if (!value.includes('_')) {
 				return prompt.styles.danger('the name must contain an underscore');

@@ -2,7 +2,9 @@ import E from 'enquirer';
 import {enquirerPromptWrapper as promptWrapper} from '../../helpers/prompt-helpers.js';
 import {handleMainMenu} from '../main.js';
 import {handleAddPropertyToPropertySet} from '../relations/connect-property-and-property-set.js';
+import {handleAddPropertyEnumeration, handleEditPropertyEnumeration} from './add-and-edit-property-enumeration.js';
 import {handleAddSimpleProperty, handleEditSimpleProperty} from './add-and-edit-simple-property.js';
+import {selectPropertyEnumerationPrompt} from './select-property-enumeration.js';
 import {handleSelectSimpleProperty} from './select-simple-property.js';
 
 const {Select, Confirm} = E as any;
@@ -10,8 +12,11 @@ const {Select, Confirm} = E as any;
 export enum PropertyAction {
 	/* eslint-disable */
 	EDIT_SIMPLE = "See / edit existing simple properties",
+	EDIT_COMPLEX = "See / edit existing complex properties",
+	EDIT_ENUMERATION = "See / edit existing property enumerations",
 	ADD_SIMPLE = "Create a simple property",
 	ADD_COMPLEX = "Create a complex property",
+	ADD_ENUMERATION = "Create an property enumeration to reference in enumerated properties",
 	REMOVE = "Delete an existing property",
 	BACK = "Back to main menu"
 	/* eslint-enable */
@@ -58,49 +63,48 @@ export const handleManageProperties = async (): Promise<void> => {
 		if (propertyToUpdate) {
 			const updatedProp = await handleEditSimpleProperty(propertyToUpdate);
 			if (updatedProp) {
-				const shouldEditPsetConnections = await addPropertyToPsetPrompt(
-					'Do you want to edit the property set(s) the property belongs to?',
+				await promptWrapper(
+					addPropertyToPsetPrompt(
+						'Do you want to edit the property set(s) the property belongs to?',
+					),
+					async () => await handleAddPropertyToPropertySet(updatedProp),
+					handleManageProperties,
 				);
-				if (shouldEditPsetConnections) {
-					await handleAddPropertyToPropertySet(updatedProp);
-				}
 			}
 		}
 		await handleManageProperties();
 
 		break;
+	case PropertyAction.EDIT_ENUMERATION:
+		await promptWrapper(
+			selectPropertyEnumerationPrompt(),
+			handleEditPropertyEnumeration,
+			handleManageProperties,
+		);
+		await handleManageProperties();
 	case PropertyAction.ADD_SIMPLE:
 		const createdProp = await handleAddSimpleProperty();
 		if (createdProp) {
-			const shouldAddToPset = await addPropertyToPsetPrompt(
-				'Do you want to add this property to a property set?',
+			await promptWrapper(
+				addPropertyToPsetPrompt(
+					'Do you want to add this property to a property set?',
+				),
+				async (shouldAdd) => {
+					if (shouldAdd) await handleAddPropertyToPropertySet(createdProp);
+				},
+				handleManageProperties,
 			);
-			if (shouldAddToPset) {
-				await handleAddPropertyToPropertySet(createdProp);
-			}
 		}
 		await handleManageProperties();
 
 		break;
-	// case PropertyAction.REMOVE:
-	// 	await promptWrapper(
-	// 		selectPropertySet(propertySetRepository, action),
-	// 		async (propertySet) => await propertySetRepository.remove(propertySet),
-	// 		handleManagePropertySets,
-	// 	);
-	// 	await handleManagePropertySets(); // TODO: should list all property sets after deleting.
-	// 	break;
-	// case PropertyAction.EDIT:
-	// 	await promptWrapper(
-	// 		selectPropertySet(propertySetRepository, action),
-	// 		async (oldPropertySet) => await promptWrapper(
-	// 			namePropertySet(propertySetRepository, action, oldPropertySet),
-	// 			async (propertySet) => await propertySetRepository.update(oldPropertySet, propertySet),
-	// 			handleManagePropertySets,
-	// 		),
-	// 		handleManagePropertySets,
-	// 	);
-	// 	break;
+	case PropertyAction.ADD_ENUMERATION:
+		await promptWrapper(
+			handleAddPropertyEnumeration(),
+		);
+		await handleManageProperties();
+
+		break;
 	case PropertyAction.BACK:
 		await handleMainMenu();
 		break;

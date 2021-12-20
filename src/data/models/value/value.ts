@@ -6,10 +6,3 @@ export class Value {
 }
 
 export interface Value {};
-
-/* eslint-disable no-unused-vars */
-export enum ValueExtension {
-    SimpleValue = 'SimpleValue',
-    SomeUnusedValue = 'SomeUnusedValue', // TODO: Remove!
-}
-/* eslint-enable */

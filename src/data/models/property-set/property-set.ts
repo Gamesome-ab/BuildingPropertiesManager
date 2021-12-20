@@ -37,7 +37,7 @@ export class PropertySet {
 	}
 
 	/**
-     * @param {PropertyReference} propertySetData
+     * @param {IPropertySet} propertySetData
      * @return {PropertySet}
      */
 	static fromData(propertySetData: IPropertySet): PropertySet {
