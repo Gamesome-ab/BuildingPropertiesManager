@@ -101,7 +101,7 @@ const booleanValuePrompt = async (
             'Value to store:',
 		choices: [true.toString(), false.toString()],
 		name: 'boolean',
-		initial: !!old,
+		initial: old ? old.selectedBoolean.toString() : '',
 		result: (res) => {
 			return res === true.toString() ? {selectedBoolean: true} : {selectedBoolean: false};
 		},
@@ -160,35 +160,35 @@ export const handleAddAndEditValue = async (
 		}
 		currentPromptStep ++;
 	}
-	if (withValuePrompt && currentPromptStep === 2) {
-		if (currentPromptData.mainValueType === 'SimpleValue') {
-			switch (currentPromptData.subValueType) {
-			case 'Label':
-			case 'Identifier':
-				currentPromptData.value = await stringValuePrompt(currentPromptData.value, true);
-				break;
-			case 'Text':
-				currentPromptData.value = await stringValuePrompt(currentPromptData.value, false);
-				break;
-			case 'Binary':
-				currentPromptData.value = await numericValuePrompt(currentPromptData.value);
-				break;
-			case 'Boolean':
-				currentPromptData.value = await (
-					await booleanValuePrompt({selectedBoolean: currentPromptData.value})
-				).selectedBoolean;
-				break;
-			default:
-				throw new Error(`Unhandled SimpleValueExtensionType: ${currentPromptData.subValueType}`);
+	if (currentPromptStep === 2) {
+		if (withValuePrompt) {
+			if (currentPromptData.mainValueType === 'SimpleValue') {
+				switch (currentPromptData.subValueType) {
+				case 'Label':
+				case 'Identifier':
+					currentPromptData.value = await stringValuePrompt(currentPromptData.value, true);
+					break;
+				case 'Text':
+					currentPromptData.value = await stringValuePrompt(currentPromptData.value, false);
+					break;
+				case 'Binary':
+					currentPromptData.value = await numericValuePrompt(currentPromptData.value);
+					break;
+				case 'Boolean':
+					currentPromptData.value = await (
+						await booleanValuePrompt({selectedBoolean: currentPromptData.value})
+					).selectedBoolean;
+					break;
+				default:
+					throw new Error(`Unhandled SimpleValueExtensionType: ${currentPromptData.subValueType}`);
+				}
 			}
-
-			const value = Reflect.construct(
-				SimpleValueExtension[currentPromptData.subValueType],
-				[currentPromptData.value],
-			);
-
-			return value;
 		}
+		const value = Reflect.construct(
+			SimpleValueExtension[currentPromptData.subValueType],
+			[currentPromptData.value],
+		);
+		return value;
 	}
 	// TODO: add optional step to set a value (for enumerations)
 };

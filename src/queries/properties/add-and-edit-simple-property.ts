@@ -2,7 +2,11 @@ import E from 'enquirer';
 import colors from 'ansi-colors';
 import _ from 'lodash';
 
-import {enquirerPromptWrapper as promptWrapper} from '../../helpers/prompt-helpers.js';
+import {
+	enquirerPromptWrapper as promptWrapper,
+	NicerConfirm,
+	NicerConfirmResult,
+} from '../../helpers/prompt-helpers.js';
 import {handleManageProperties} from './manage-properties.js';
 import {SimplePropertyRepository} from '../../data/simple-property-repository.js';
 import {Identifier} from '../../data/models/value/simple-value/identifier.js';
@@ -20,7 +24,7 @@ import {selectPropertyEnumerationPrompt} from './select-property-enumeration.js'
 import {PropertyEnumeration} from '../../data/models/property/property-enumeration.js';
 import {PropertyEnumeratedValue} from '../../data/models/property/simple-property/property-enumerated-value.js';
 
-const {Select, Input, Confirm} = E as any;
+const {Select, Input} = E as any;
 
 
 const selectSimplePropertyExtensionPrompt = async (
@@ -114,16 +118,15 @@ const describeSimplePropertyPrompt = async (
 
 const confirmSimplePropertyPrompt = async (
 	simpleProperty: SimpleProperty,
-): Promise<boolean> => {
+): Promise<NicerConfirmResult> => {
 	const firstMessageLine = `Property will be saved with this data:`;
 	const secondMessageLine = `${simpleProperty.type}: ${simpleProperty.name.value}`;
 	const thirdMessageLine = `Description: ${simpleProperty.description.value}`;
 	const fourthMessageLine = `Is this correct?`;
 
-	const prompt = new Confirm({
+	const prompt = new NicerConfirm({
 		message: [firstMessageLine, secondMessageLine, thirdMessageLine, fourthMessageLine].join('\n'),
-		name: 'propertyDescription',
-		initial: 'y',
+		name: 'propertyConfirmation',
 	});
 
 	return prompt.run();
@@ -231,7 +234,6 @@ export const handleAddSimpleProperty = async (
 		} else {
 			throw new Error('not implemented');
 		}
-
 		if (!simpleProperty) {
 			// request was cancelled or we got a bad value, go back to the previous step
 			return handleAddSimpleProperty(
@@ -248,7 +250,7 @@ export const handleAddSimpleProperty = async (
 		const confirm = await promptWrapper(
 			confirmSimplePropertyPrompt(simpleProperty),
 		);
-		if (!confirm) {
+		if (!(confirm && confirm.selectedBoolean)) {
 			// request was probably cancelled. go back to the previous prompt.
 			return handleAddSimpleProperty(
 				simplePropertyExtensionType,

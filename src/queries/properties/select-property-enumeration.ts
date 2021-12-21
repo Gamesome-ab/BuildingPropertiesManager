@@ -3,6 +3,7 @@ import colors from 'ansi-colors';
 
 import {PropertyEnumeration, PropertyEnumerationReference} from '../../data/models/property/property-enumeration.js';
 import {PropertyEnumerationRepository} from '../../data/property-enumeration-repository.js';
+import {Logger} from '../../helpers/prompt-helpers.js';
 
 const {Select} = E as any;
 
@@ -14,7 +15,7 @@ export const selectPropertyEnumerationPrompt = async (
 	const enumerations = await propertyEnumerationRepository.getAll();
 
 	if (enumerations.length === 0) {
-		throw new Error('No property enumerations found');
+		Logger.warn('No property enumerations found');
 	}
 
 	if (enumerations.length >= 1) {

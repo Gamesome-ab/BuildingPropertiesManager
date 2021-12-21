@@ -1,5 +1,8 @@
 import E from 'enquirer';
-import {enquirerPromptWrapper as promptWrapper} from '../../helpers/prompt-helpers.js';
+import {enquirerPromptWrapper as promptWrapper,
+	NicerConfirm,
+	NicerConfirmResult,
+} from '../../helpers/prompt-helpers.js';
 import {handleMainMenu} from '../main.js';
 import {handleAddPropertyToPropertySet} from '../relations/connect-property-and-property-set.js';
 import {handleAddPropertyEnumeration, handleEditPropertyEnumeration} from './add-and-edit-property-enumeration.js';
@@ -7,7 +10,7 @@ import {handleAddSimpleProperty, handleEditSimpleProperty} from './add-and-edit-
 import {selectPropertyEnumerationPrompt} from './select-property-enumeration.js';
 import {handleSelectSimpleProperty} from './select-simple-property.js';
 
-const {Select, Confirm} = E as any;
+const {Select} = E as any;
 
 export enum PropertyAction {
 	/* eslint-disable */
@@ -22,11 +25,10 @@ export enum PropertyAction {
 	/* eslint-enable */
 }
 
-const addPropertyToPsetPrompt = async (message: string): Promise<boolean> => {
-	const prompt = new Confirm({
+const addPropertyToPsetPrompt = async (message: string): Promise<NicerConfirmResult> => {
+	const prompt = new NicerConfirm({
 		message: message,
 		name: 'propertyToPropertySet',
-		initial: 'y',
 	});
 
 	return prompt.run();
@@ -67,7 +69,9 @@ export const handleManageProperties = async (): Promise<void> => {
 					addPropertyToPsetPrompt(
 						'Do you want to edit the property set(s) the property belongs to?',
 					),
-					async () => await handleAddPropertyToPropertySet(updatedProp),
+					async (shouldAdd) => {
+						if (shouldAdd.selectedBoolean) await handleAddPropertyToPropertySet(updatedProp);
+					},
 					handleManageProperties,
 				);
 			}
