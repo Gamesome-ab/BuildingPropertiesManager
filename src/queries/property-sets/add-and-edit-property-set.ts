@@ -86,7 +86,7 @@ const describePropertySetPrompt = async (
 		message:
             firstMessageLine +
             '\n' +
-            'This should be explicit since this and the name should be sufficient' +
+            'This should be explicit since this and the name should be sufficient ' +
             'to distinguish this from all other property sets',
 		name: 'propertySetDescription',
 		initial: initial.value,

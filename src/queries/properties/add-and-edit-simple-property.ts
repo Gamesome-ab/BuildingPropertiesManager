@@ -98,7 +98,7 @@ const describeSimplePropertyPrompt = async (
 		message:
             firstMessageLine +
             '\n' +
-            'This should be explicit since this and the name should be sufficient' +
+            'This should be explicit since this and the name should be sufficient ' +
             'to distinguish this from all other properties',
 		name: 'propertyDescription',
 		initial: 'Some explicit description',
@@ -139,6 +139,30 @@ export const handleAddSimpleProperty = async (
 	simpleProperty: SimpleProperty = null,
 	currentPromptStep: number = 0,
 ): Promise<SimpleProperty | void> => {
+	const reset = () => {
+		return handleAddSimpleProperty();
+	};
+
+	const back = () => {
+		return handleAddSimpleProperty(
+			simplePropertyExtensionType,
+			propertyName,
+			description,
+			simpleProperty,
+			currentPromptStep - 1,
+		);
+	};
+
+	const next = () => {
+		return handleAddSimpleProperty(
+			simplePropertyExtensionType,
+			propertyName,
+			description,
+			simpleProperty,
+			currentPromptStep + 1,
+		);
+	};
+
 	if (currentPromptStep === 0) {
 		simplePropertyExtensionType = await promptWrapper(
 			selectSimplePropertyExtensionPrompt(simplePropertyExtensionType),
@@ -147,7 +171,6 @@ export const handleAddSimpleProperty = async (
 			simplePropertyExtensionType &&
 			Object.keys(SimplePropertyExtension).includes(simplePropertyExtensionType)
 		)) {
-			// request was probably cancelled. go back to the previous menu
 			return handleManageProperties();
 		}
 		currentPromptStep ++;
@@ -156,45 +179,19 @@ export const handleAddSimpleProperty = async (
 		propertyName = await promptWrapper(
 			nameSimplePropertyPrompt(simplePropertyExtensionType, propertyName),
 		);
-		if (!(propertyName && propertyName.value)) {
-			// request was probably cancelled. go back to the previous prompt.
-			return handleAddSimpleProperty(
-				simplePropertyExtensionType,
-				propertyName,
-				description,
-				simpleProperty,
-				currentPromptStep - 1,
-			);
-		}
+		if (!(propertyName && propertyName.value)) return back();
+
 		currentPromptStep ++;
 	}
 	if (currentPromptStep === 2) {
 		description = await promptWrapper(
 			describeSimplePropertyPrompt(simplePropertyExtensionType, propertyName),
 		);
-		if (!(description && description.value)) {
-			// request was probably cancelled. go back to the previous prompt.
-			return handleAddSimpleProperty(
-				simplePropertyExtensionType,
-				propertyName,
-				description,
-				simpleProperty,
-				currentPromptStep - 1,
-			);
-		}
+		if (!(description && description.value)) return back();
+
 		currentPromptStep ++;
 	}
 	if (currentPromptStep === 3) {
-		const back = () => {
-			return handleAddSimpleProperty(
-				simplePropertyExtensionType,
-				propertyName,
-				description,
-				simpleProperty,
-				currentPromptStep - 1,
-			);
-		};
-
 		if (simplePropertyExtensionType === 'PropertySingleValue') {
 			const value: Value = await promptWrapper(
 				handleAddAndEditValue(
@@ -219,11 +216,14 @@ export const handleAddSimpleProperty = async (
 			const enumeration: PropertyEnumeration = await promptWrapper(
 				selectPropertyEnumerationPrompt(
 					simpleProperty?.type === 'PropertyEnumeratedValue' ?
-						(simpleProperty as PropertyEnumeratedValue).enumerationReference:
+						(simpleProperty as PropertyEnumeratedValue).enumerationReference :
 						null,
 				),
+				null,
+				back,
 			);
-
+			// happens when there where no enumerations. reset, not back, because we want to reuse name
+			if (enumeration === null) return reset();
 			if (enumeration) {
 				simpleProperty = new PropertyEnumeratedValue(
 					propertyName,
@@ -236,13 +236,7 @@ export const handleAddSimpleProperty = async (
 		}
 		if (!simpleProperty) {
 			// request was cancelled or we got a bad value, go back to the previous step
-			return handleAddSimpleProperty(
-				simplePropertyExtensionType,
-				propertyName,
-				description,
-				simpleProperty,
-				currentPromptStep - 1,
-			);
+			return back();
 		}
 		currentPromptStep ++;
 	}
@@ -250,16 +244,8 @@ export const handleAddSimpleProperty = async (
 		const confirm = await promptWrapper(
 			confirmSimplePropertyPrompt(simpleProperty),
 		);
-		if (!(confirm && confirm.selectedBoolean)) {
-			// request was probably cancelled. go back to the previous prompt.
-			return handleAddSimpleProperty(
-				simplePropertyExtensionType,
-				propertyName,
-				description,
-				simpleProperty,
-				currentPromptStep - 1,
-			);
-		}
+		if (confirm && confirm.selectedBoolean) return next();
+		else return back();
 	}
 
 	const repo = new SimplePropertyRepository();

@@ -56,7 +56,11 @@ export const managePropertySetsPrompt = async (): Promise<void> => {
 		await managePropertySetsPrompt();
 		break;
 	case PropertySetAction.ADD:
-		await handleAddPropertySet(),
+		await promptWrapper(
+			handleAddPropertySet(),
+			null,
+			managePropertySetsPrompt,
+		);
 		await managePropertySetsPrompt(); // TODO: should list all property sets after adding.
 		break;
 	case PropertySetAction.REMOVE:

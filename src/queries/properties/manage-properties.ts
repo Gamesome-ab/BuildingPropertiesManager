@@ -94,7 +94,7 @@ export const handleManageProperties = async (): Promise<void> => {
 					'Do you want to add this property to a property set?',
 				),
 				async (shouldAdd) => {
-					if (shouldAdd) await handleAddPropertyToPropertySet(createdProp);
+					if (shouldAdd && shouldAdd.selectedBoolean) await handleAddPropertyToPropertySet(createdProp);
 				},
 				handleManageProperties,
 			);

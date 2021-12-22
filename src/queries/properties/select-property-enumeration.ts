@@ -16,6 +16,7 @@ export const selectPropertyEnumerationPrompt = async (
 
 	if (enumerations.length === 0) {
 		Logger.warn('No property enumerations found');
+		return null;
 	}
 
 	if (enumerations.length >= 1) {
