@@ -1,6 +1,6 @@
 import {PropertySet} from '../../data/models/property-set/property-set.js';
 import {Property} from '../../data/models/property/property.js';
-import {PropertySetRepository} from '../../data/property-set-repository.js';
+import {PropertySetRepository} from '../../data/repositories/property-set-repository.js';
 
 import {enquirerPromptWrapper as promptWrapper} from '../../helpers/prompt-helpers.js';
 import {managePropertySetsPrompt} from '../property-sets/manage-property-set.js';

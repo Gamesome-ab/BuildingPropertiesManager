@@ -1,10 +1,10 @@
 import {join} from 'path';
 import {Low, JSONFile} from 'lowdb';
 import _ from 'lodash';
-import {IPropertySet, PropertySet} from './models/property-set/property-set.js';
-import {Property} from './models/property/property.js';
+import {IPropertySet, PropertySet} from '../models/property-set/property-set.js';
+import {Property} from '../models/property/property.js';
 import {SimplePropertyRepository} from './simple-property-repository.js';
-import {SimplePropertyExtension} from './models/property/simple-property/simple-property-extension.js';
+import {SimplePropertyExtension} from '../models/property/simple-property/simple-property-extension.js';
 
 /**
  * Repository for property sets.

@@ -1,7 +1,7 @@
 import E from 'enquirer';
 
 import {PropertySet} from '../../data/models/property-set/property-set.js';
-import {PropertySetRepository} from '../../data/property-set-repository.js';
+import {PropertySetRepository} from '../../data/repositories/property-set-repository.js';
 
 const {Select, MultiSelect} = E as any;
 

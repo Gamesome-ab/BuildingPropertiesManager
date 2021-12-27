@@ -1,19 +1,19 @@
 import {join} from 'path';
 import {Low, JSONFile} from 'lowdb';
-import {ISimpleProperty, SimpleProperty} from './models/property/simple-property/simple-property.js';
+import {ISimpleProperty, SimpleProperty} from '../models/property/simple-property/simple-property.js';
 import {
 	IPropertySingleValue,
-} from './models/property/simple-property/property-single-value';
+} from '../models/property/simple-property/property-single-value';
 import {
 	SimplePropertyExtension,
 	SimplePropertyExtensionType,
 	simplePropertyFromData,
-} from './models/property/simple-property/simple-property-extension.js';
+} from '../models/property/simple-property/simple-property-extension.js';
 import {
 	IPropertyEnumeratedValue,
-} from './models/property/simple-property/property-enumerated-value.js';
-import {PropertySet} from './models/property-set/property-set.js';
-import {IProperty, Property} from './models/property/property.js';
+} from '../models/property/simple-property/property-enumerated-value.js';
+import {PropertySet} from '../models/property-set/property-set.js';
+import {IProperty, Property} from '../models/property/property.js';
 import {PropertySetRepository} from './property-set-repository.js';
 
 interface DbModel {
@@ -39,7 +39,7 @@ type VerifyData<
 /* eslint-enable */
 
 /**
- * Repository for property sets.
+ * Repository for simple properties.
 */
 export class SimplePropertyRepository {
 	private adapter: JSONFile<DbModel>;

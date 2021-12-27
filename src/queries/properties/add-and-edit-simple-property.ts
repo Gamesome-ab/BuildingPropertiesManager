@@ -8,7 +8,7 @@ import {
 	NicerConfirmResult,
 } from '../../helpers/prompt-helpers.js';
 import {handleManageProperties} from './manage-properties.js';
-import {SimplePropertyRepository} from '../../data/simple-property-repository.js';
+import {SimplePropertyRepository} from '../../data/repositories/simple-property-repository.js';
 import {Identifier} from '../../data/models/value/simple-value/identifier.js';
 import {Text} from '../../data/models/value/simple-value/text.js';
 import {PropertySingleValue} from '../../data/models/property/simple-property/property-single-value.js';
@@ -147,6 +147,7 @@ export const handleAddSimpleProperty = async (
 				);
 			}
 		} else if (simplePropertyExtensionType === 'PropertyEnumeratedValue') {
+			// NOTE: we don't use a connector since this is just a pointer and not reflected to the enumeration
 			const enumeration: PropertyEnumeration = await promptWrapper(
 				selectPropertyEnumerationPrompt(
 					simpleProperty?.type === 'PropertyEnumeratedValue' ?

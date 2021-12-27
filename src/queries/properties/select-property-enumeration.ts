@@ -2,7 +2,7 @@ import E from 'enquirer';
 import colors from 'ansi-colors';
 
 import {PropertyEnumeration, PropertyEnumerationReference} from '../../data/models/property/property-enumeration.js';
-import {PropertyEnumerationRepository} from '../../data/property-enumeration-repository.js';
+import {PropertyEnumerationRepository} from '../../data/repositories/property-enumeration-repository.js';
 import {Logger} from '../../helpers/prompt-helpers.js';
 
 const {Select} = E as any;

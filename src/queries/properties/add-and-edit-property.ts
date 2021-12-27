@@ -3,7 +3,7 @@ import E from 'enquirer';
 import {
 	enquirerPromptWrapper as promptWrapper,
 } from '../../helpers/prompt-helpers.js';
-import {SimplePropertyRepository} from '../../data/simple-property-repository.js';
+import {SimplePropertyRepository} from '../../data/repositories/simple-property-repository.js';
 import {Identifier} from '../../data/models/value/simple-value/identifier.js';
 import {Text} from '../../data/models/value/simple-value/text.js';
 import {

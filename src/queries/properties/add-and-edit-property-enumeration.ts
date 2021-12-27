@@ -4,7 +4,7 @@ import _ from 'lodash';
 import {Value} from '../../data/models/value/value.js';
 import {PropertyEnumeration} from '../../data/models/property/property-enumeration.js';
 import {Label} from '../../data/models/value/simple-value/label.js';
-import {PropertyEnumerationRepository} from '../../data/property-enumeration-repository.js';
+import {PropertyEnumerationRepository} from '../../data/repositories/property-enumeration-repository.js';
 import {enquirerPromptWrapper as promptWrapper} from '../../helpers/prompt-helpers.js';
 import {handleAddAndEditValue} from '../value/add-and-edit-value.js';
 import {SimpleValue} from '../../data/models/value/simple-value/simple-value.js';
@@ -141,7 +141,7 @@ const handleAddAndEditPropertyEnumeration = async (
 	oldPropertyEnumeration: PropertyEnumeration = null,
 	currentlyEditing: PropertyEnumeration = null,
 	currentPromptStep: number = 0,
-	onSave: (propertyEnumeration: PropertyEnumeration) => Promise<PropertyEnumeration>,
+	onSave: (propertyEnumeration: PropertyEnumeration) => Promise<PropertyEnumeration>, // to allow both add and edit
 ): Promise<void> => {
 	if (oldPropertyEnumeration) {
 		currentlyEditing = currentlyEditing || _.cloneDeep(oldPropertyEnumeration);

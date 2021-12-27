@@ -1,11 +1,11 @@
 import {join} from 'path';
 import {Low, JSONFile} from 'lowdb';
 import _ from 'lodash';
-import {IPropertyEnumeration, PropertyEnumeration} from './models/property/property-enumeration.js';
+import {IPropertyEnumeration, PropertyEnumeration} from '../models/property/property-enumeration.js';
 
 /**
- * Repository for property sets.
-*/
+ * Repository for property enumerations.
+ */
 export class PropertyEnumerationRepository {
 	private adapter: JSONFile<IPropertyEnumeration[]>;
 	private db: Low<IPropertyEnumeration[]>;
@@ -33,7 +33,7 @@ export class PropertyEnumerationRepository {
 	/**
      * get one PropertyEnumeration (even though all is fetched)
 	 * @param  {PropertyEnumeration} propertyEnumeration
-	 * @return {Promise<PropertySet>} a PropertySet
+	 * @return {Promise<PropertyEnumeration>} a PropertyEnumeration
 	 */
 	public async get(propertyEnumeration: PropertyEnumeration | IPropertyEnumeration): Promise<PropertyEnumeration> {
 		await this.db.read();
@@ -43,9 +43,9 @@ export class PropertyEnumerationRepository {
 	}
 
 	/**
-     * store a PropertySet
+     * store a PropertyEnumeration
 	 * @param  {PropertyEnumeration} propertyEnumeration
-	 * @return {Promise<PropertyEnumeration>} a PropertySet
+	 * @return {Promise<PropertyEnumeration>} a PropertyEnumeration
 	 */
 	public async add(propertyEnumeration: PropertyEnumeration): Promise<PropertyEnumeration> {
 		await this.db.read();
@@ -84,7 +84,7 @@ export class PropertyEnumerationRepository {
 	/**
      * delete a PropertyEnumeration
 	 * @param  {PropertyEnumeration} propertyEnumeration
-	 * @return {Promise<PropertyEnumeration[]>} the deleted PropertySets
+	 * @return {Promise<PropertyEnumeration[]>} the deleted PropertyEnumerations
 	 */
 	public async remove(propertyEnumeration: PropertyEnumeration): Promise<PropertyEnumeration> {
 		await this.db.read();

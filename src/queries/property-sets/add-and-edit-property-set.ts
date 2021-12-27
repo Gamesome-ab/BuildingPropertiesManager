@@ -1,5 +1,5 @@
 import {PropertySet} from '../../data/models/property-set/property-set.js';
-import {PropertySetRepository} from '../../data/property-set-repository.js';
+import {PropertySetRepository} from '../../data/repositories/property-set-repository.js';
 import _ from 'lodash';
 
 import E from 'enquirer';

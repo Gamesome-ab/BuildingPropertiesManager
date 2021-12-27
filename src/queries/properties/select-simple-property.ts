@@ -1,5 +1,5 @@
 import E from 'enquirer';
-import {SimplePropertyRepository} from '../../data/simple-property-repository.js';
+import {SimplePropertyRepository} from '../../data/repositories/simple-property-repository.js';
 import {
 	SimplePropertyExtension,
 	SimplePropertyExtensionType,
