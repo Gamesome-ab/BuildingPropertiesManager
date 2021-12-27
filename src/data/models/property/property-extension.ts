@@ -1,4 +1,5 @@
-import {SimpleProperty} from './simple-property/simple-property';
+import {ComplexProperty} from './complex-property.js';
+import {SimpleProperty} from './simple-property/simple-property.js';
 
 
 /**
@@ -6,6 +7,7 @@ import {SimpleProperty} from './simple-property/simple-property';
  */
 export const PropertyExtension = {
 	SimpleProperty,
+	ComplexProperty,
 };
 
 

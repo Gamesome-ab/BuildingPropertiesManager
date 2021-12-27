@@ -1,7 +1,7 @@
 import {join} from 'path';
 import {Low, JSONFile} from 'lowdb';
 import _ from 'lodash';
-import {ComplexProperty, IComplexProperty} from '../models/property/complex-property';
+import {ComplexProperty, IComplexProperty} from '../models/property/complex-property.js';
 
 /**
  * Repository for complex properties.
@@ -28,6 +28,18 @@ export class ComplexPropertyRepository {
 		return this.db.data.map((ComplexPropertyData) => {
 			return ComplexProperty.fromData(ComplexPropertyData);
 		});
+	}
+
+
+	/**
+     * list names of all ComplexProperties
+	 * @return {Promise<string[]>} a list of ComplexProperties
+	 */
+	public async getAllNames(): Promise<string[]> {
+		const properties = await this.getAll();
+		const propertyNames = properties.map((property) => property.name.value);
+
+		return propertyNames;
 	}
 
 	/**

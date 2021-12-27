@@ -9,7 +9,6 @@ import {Text} from '../../data/models/value/simple-value/text.js';
 import {
 	SimplePropertyExtensionType,
 } from '../../data/models/property/simple-property/simple-property-extension.js';
-import {SimpleProperty} from '../../data/models/property/simple-property/simple-property.js';
 import {PropertyExtensionType} from '../../data/models/property/property-extension.js';
 import {Property} from '../../data/models/property/property.js';
 
@@ -44,7 +43,7 @@ const namePropertyPrompt = async (
 				return prompt.styles.danger('the name should not contain Pset_ or pset_ (that is for property sets)');
 			}
 			if (simplePropertyNames.includes(value) && old?.value !== value) {
-				return prompt.styles.danger('a property set with that name already exists');
+				return prompt.styles.danger('a property with that name already exists');
 			}
 			return true;
 		},
@@ -97,14 +96,14 @@ export type PropertyBaseData = {
  * @param {number} currentPromptStep - The current prompt step (used only locally)
  * @return {Promise<PropertyBaseData>}
  */
-export const handleAddPropertyNameAndDescription = async (
+export const handleAddPropertyNameAndDescription = async <T extends Property>(
 	data: PropertyBaseData = {} as PropertyBaseData,
 	superBack: () => any,
 	superNext: (data: PropertyBaseData) => any,
 	currentPromptStep: number = 0,
-): Promise<SimpleProperty | void> => {
+): Promise<T | void> => {
 	const back = () => {
-		return handleAddPropertyNameAndDescription(
+		return handleAddPropertyNameAndDescription<T>(
 			data,
 			superBack,
 			superNext,
@@ -113,7 +112,7 @@ export const handleAddPropertyNameAndDescription = async (
 	};
 
 	const next = () => {
-		return handleAddPropertyNameAndDescription(
+		return handleAddPropertyNameAndDescription<T>(
 			data,
 			superBack,
 			superNext,

@@ -218,7 +218,9 @@ export class SimplePropertyRepository {
 	/**
      * Handle renaming of related entity (propertySet of complexProperty)
 	 * NOTE: this uses the fact that name.value and name.value are same type for both Property and PropertySet
-	 * even though they use Label and Identifier respectively.
+	 * (i.e StringOfLength<1, 255>) even though they use Label and Identifier respectively. I.e. just replacing
+	 * value is possible.
+	 *
 	 * @param {string} relatedEntityType
 	 * @param {string} oldName
 	 * @param {string} newName

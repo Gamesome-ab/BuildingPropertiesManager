@@ -29,7 +29,7 @@ export class PropertyEnumeration implements IPropertyEnumeration {
 	/**
      * @return {PropertyEnumerationReference}
      */
-	asPropertyEnumerationReference(): PropertyEnumerationReference {
+	get asPropertyEnumerationReference(): PropertyEnumerationReference {
 		return new PropertyEnumerationReference(this);
 	}
 

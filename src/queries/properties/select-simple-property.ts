@@ -44,7 +44,7 @@ const selectSimplePropertyPrompt = async (
 		await simplePropertyRepository.getAllOfSubType(extensionType);
 
 	if (properties.length === 0) {
-		Logger.warn('No simple properties found');
+		Logger.warn(`No simple properties of type ${extensionType} found`);
 		return null;
 	}
 

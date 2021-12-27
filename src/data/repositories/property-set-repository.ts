@@ -105,7 +105,7 @@ export class PropertySetRepository {
 		property: Property,
 		propertySetsToBeConnectedTo: PropertySet[],
 	): Promise<void> {
-		const propertyReference = property.asPropertyReference();
+		const propertyReference = property.asPropertyReference;
 		await this.db.read();
 
 		// remove from everywhere

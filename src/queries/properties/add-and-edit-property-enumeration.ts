@@ -168,7 +168,7 @@ const handleAddAndEditPropertyEnumeration = async (
 			async () => await handleAddAndEditPropertyEnumeration(
 				oldPropertyEnumeration,
 				currentlyEditing,
-				currentPromptStep -1,
+				currentPromptStep - 1,
 				onSave,
 			),
 		);

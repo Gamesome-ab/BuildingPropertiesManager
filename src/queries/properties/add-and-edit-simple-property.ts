@@ -28,7 +28,7 @@ import {handleAddPropertyNameAndDescription, handleEditPropertyNameAndDescriptio
 const {Select} = E as any;
 
 
-const selectSimplePropertyExtensionPrompt = async (
+export const selectSimplePropertyExtensionPrompt = async (
 	old?: SimplePropertyExtensionType,
 ): Promise<SimplePropertyExtensionType> => {
 	const prompt = new Select({
@@ -118,9 +118,9 @@ export const handleAddSimpleProperty = async (
 				description: description,
 			},
 			() => handleManageProperties(),
-			(editedProp) => {
-				name = editedProp.name;
-				description = editedProp.description;
+			(nameAndDescription) => {
+				name = nameAndDescription.name;
+				description = nameAndDescription.description;
 				return next();
 			},
 		);
@@ -163,7 +163,7 @@ export const handleAddSimpleProperty = async (
 				simpleProperty = new PropertyEnumeratedValue(
 					name,
 					description,
-					enumeration.asPropertyEnumerationReference(),
+					enumeration.asPropertyEnumerationReference,
 				);
 			}
 		} else {

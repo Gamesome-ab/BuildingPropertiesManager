@@ -5,6 +5,7 @@ import {enquirerPromptWrapper as promptWrapper,
 } from '../../helpers/prompt-helpers.js';
 import {handleMainMenu} from '../main.js';
 import {handleAddPropertyToPropertySet} from '../relations/connect-property-and-property-set.js';
+import {handleAddComplexProperty} from './add-and-edit-complex-property.js';
 import {handleAddPropertyEnumeration, handleEditPropertyEnumeration} from './add-and-edit-property-enumeration.js';
 import {handleAddSimpleProperty, handleEditSimpleProperty} from './add-and-edit-simple-property.js';
 import {selectPropertyEnumerationPrompt} from './select-property-enumeration.js';
@@ -87,14 +88,34 @@ export const handleManageProperties = async (): Promise<void> => {
 		);
 		await handleManageProperties();
 	case PropertyAction.ADD_SIMPLE:
-		const createdProp = await handleAddSimpleProperty();
-		if (createdProp) {
+		const createdSimpleProperty = await handleAddSimpleProperty();
+		if (createdSimpleProperty) {
 			await promptWrapper(
 				addPropertyToPsetPrompt(
 					'Do you want to add this property to a property set?',
 				),
 				async (shouldAdd) => {
-					if (shouldAdd && shouldAdd.selectedBoolean) await handleAddPropertyToPropertySet(createdProp);
+					if (shouldAdd && shouldAdd.selectedBoolean) {
+						await handleAddPropertyToPropertySet(createdSimpleProperty);
+					}
+				},
+				handleManageProperties,
+			);
+		}
+		await handleManageProperties();
+
+		break;
+	case PropertyAction.ADD_COMPLEX:
+		const createdComplexProperty = await handleAddComplexProperty();
+		if (createdComplexProperty) {
+			await promptWrapper(
+				addPropertyToPsetPrompt(
+					'Do you want to add this property to a property set?',
+				),
+				async (shouldAdd) => {
+					if (shouldAdd && shouldAdd.selectedBoolean) {
+						await handleAddPropertyToPropertySet(createdComplexProperty);
+					}
 				},
 				handleManageProperties,
 			);

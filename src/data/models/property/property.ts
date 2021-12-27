@@ -42,7 +42,7 @@ export abstract class Property implements IProperty {
 	 * not part of IFC specification
      * @return {PropertyReference}
      */
-	asPropertyReference(): PropertyReference {
+	get asPropertyReference(): PropertyReference {
 		return new PropertyReference(this);
 	}
 	/**
