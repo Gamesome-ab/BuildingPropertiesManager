@@ -57,7 +57,7 @@ const selectSimplePropertyPrompt = async (
 			choices: properties.map((p) => ({
 				name: `${p.name.value}`,
 				value: p.name.value,
-				hint: `${extensionType === 'All' ? p.type + ' ' : ''} [${p.valuesToLegibleString}]`,
+				hint: `${extensionType === 'All' ? p.type + ' ' : ''}[${p.asLegibleString}]`,
 			})),
 			result(res) {
 				// NOTE: See https://github.com/enquirer/enquirer/blob/8d626c206733420637660ac7c2098d7de45e8590/examples/multiselect/option-result.js

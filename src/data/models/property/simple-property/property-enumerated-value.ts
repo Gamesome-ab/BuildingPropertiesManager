@@ -47,7 +47,7 @@ export class PropertyEnumeratedValue extends SimpleProperty implements IProperty
 	}
 
 	// eslint-disable-next-line require-jsdoc
-	get valuesToLegibleString(): string {
+	get asLegibleString(): string {
 		return [
 			this.enumerationValues && `enumerationValues: ${JSON.stringify(this.enumerationValues)}`,
 			this.enumerationReference && `references ${this.enumerationReference.name.value}`,

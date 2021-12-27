@@ -1,6 +1,6 @@
 import {Value} from '../../value/value.js';
 import {Unit} from '../../unit/unit.interface.js';
-import {SimpleProperty} from './simple-property.js';
+import {ISimpleProperty, SimpleProperty} from './simple-property.js';
 import {Identifier} from '../../value/simple-value/identifier.js';
 import {Text} from '../../value/simple-value/text.js';
 import {PropertySetReference} from '../../property-set/property-set.js';
@@ -34,9 +34,11 @@ export class PropertySingleValue extends SimpleProperty implements IPropertySing
 	}
 
 	// eslint-disable-next-line require-jsdoc
-	get valuesToLegibleString(): string {
-		return `valueType: ${this.nominalValue.type}` +
-			(this.unit ? `, unit: ${JSON.stringify(this.unit)}` : '');
+	get asLegibleString(): string {
+		return `Value type: ${this.nominalValue.type}` +
+			(this.unit ? `, Unit: ${JSON.stringify(this.unit)}` : '') +
+			(this.partOfPset.length > 0 ? `, Part of ${this.partOfPset.length} property sets` : '') +
+			(this.partOfComplex.length > 0 ? `, Part of ${this.partOfComplex.length} complex properties` : '');
 	}
 
 	/**
@@ -59,7 +61,7 @@ export class PropertySingleValue extends SimpleProperty implements IPropertySing
 }
 
 
-export interface IPropertySingleValue extends SimpleProperty {
+export interface IPropertySingleValue extends ISimpleProperty {
     nominalValue?: Value
     unit?: Unit
 }

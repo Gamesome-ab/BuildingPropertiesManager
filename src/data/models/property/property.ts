@@ -37,11 +37,20 @@ export abstract class Property implements IProperty {
 	}
 
 	/**
+	 * Create an object that holds enough data to use as a reference to this Property
+	 *
+	 * not part of IFC specification
      * @return {PropertyReference}
      */
 	asPropertyReference(): PropertyReference {
 		return new PropertyReference(this);
 	}
+	/**
+     * helper function to describe any of the extending classes values
+     *
+     * not part of IFC specification
+     */
+	abstract get asLegibleString(): string;
 }
 
 export interface IProperty {
@@ -55,6 +64,8 @@ export interface IProperty {
      // propertyDependsOn: [];
      // hasConstraints: [];
      // hasApprovals: [];
+
+    get asLegibleString(): string;
 }
 
 /**
