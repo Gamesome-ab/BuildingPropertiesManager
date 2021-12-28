@@ -66,11 +66,23 @@ export class ComplexPropertyRepository {
 	 * @return {Promise<ComplexProperty>} a ComplexProperty
 	 */
 	public async add(complexProperty: ComplexProperty): Promise<ComplexProperty> {
+		// validate the request
+		const propertyRepository = new PropertyRepositoriesWrapper();
+		if (
+			(await propertyRepository.getAllNames()).includes(complexProperty.name.value)
+		) {
+			throw new Error(`Property with name ${complexProperty.name.value} already exists`);
+		}
+
 		await this.db.read();
-		// TODO: verify that the name is unique
 
 		this.db.data.push(complexProperty);
 		await this.db.write();
+
+		const propertyRepositoryWrapper = new PropertyRepositoriesWrapper();
+		await propertyRepositoryWrapper.onUpdatedComplexPropertyConnections(
+			complexProperty,
+		);
 
 		return complexProperty;
 	}
@@ -85,6 +97,15 @@ export class ComplexPropertyRepository {
 		oldComplexProperty: ComplexProperty,
 		newComplexProperty: ComplexProperty,
 	): Promise<ComplexProperty> {
+		// validate the update request
+		const propertyRepository = new PropertyRepositoriesWrapper();
+		if (
+			(await propertyRepository.getAllNames()).includes(newComplexProperty.name.value) &&
+			newComplexProperty.name.value !== oldComplexProperty.name.value
+		) {
+			throw new Error(`Property with name ${newComplexProperty.name.value} already exists`);
+		}
+
 		await this.db.read();
 
 		const index = this.db.data.findIndex((complexProp) => complexProp.name.value === oldComplexProperty.name.value);
@@ -123,12 +144,13 @@ export class ComplexPropertyRepository {
 			return !oldComplexPropertyCopy.hasProperties.find((p) => p.name.value === property.name.value);
 		});
 
+		console.log('update includes removals and additions: ', removedReferences, addedReferences);
 		// if so, update the references
 		if (removedReferences.length > 0 || addedReferences.length > 0) {
-			await this.onUpdatedComplexPropertyConnections(newComplexProperty);
-
-			const simplePropertyRepository = new SimplePropertyRepository();
-			await simplePropertyRepository.onUpdatedComplexPropertyConnections(newComplexProperty);
+			const propertyRepositoryWrapper = new PropertyRepositoriesWrapper();
+			await propertyRepositoryWrapper.onUpdatedComplexPropertyConnections(
+				newComplexProperty,
+			);
 		}
 
 		return this.get(newComplexProperty);
@@ -191,7 +213,7 @@ export class ComplexPropertyRepository {
 	 * handle updated complex property-connections for a property.
 	 * essentially, remove the property from all property sets and add it to the new ones.
 	 *
-	 * // NOTE: if renaming at the same time, make sure to do that first.
+	 * NOTE: if renaming at the same time, make sure to do that first.
 	 * @param  {ComplexProperty} complexPropertyEditConnectionsTo
 	 * @return {Promise<void>}
 	 */

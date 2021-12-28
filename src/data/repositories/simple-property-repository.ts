@@ -111,9 +111,15 @@ export class SimplePropertyRepository {
 	 * @return {Promise<SimpleProperty>} the stored property
 	 */
 	public async add<T extends SimpleProperty>(property: T): Promise<T> {
-		await this.db.read();
+		// validate the request
+		const propertyRepository = new PropertyRepositoriesWrapper();
+		if (
+			(await propertyRepository.getAllNames()).includes(property.name.value)
+		) {
+			throw new Error(`Property with name ${property.name.value} already exists`);
+		}
 
-		// TODO: verify that the name is unique
+		await this.db.read();
 
 		if (this.db.data[property.type as SimplePropertyExtensionType]) {
 			this.db.data[property.type as SimplePropertyExtensionType].push(property);
@@ -135,8 +141,6 @@ export class SimplePropertyRepository {
 		oldProperty: T,
 		newProperty: T,
 	): Promise<T> {
-		await this.db.read();
-
 		// validate the update request
 		const propertyRepository = new PropertyRepositoriesWrapper();
 		if (
@@ -145,6 +149,9 @@ export class SimplePropertyRepository {
 		) {
 			throw new Error(`Property with name ${newProperty.name.value} already exists`);
 		}
+
+		await this.db.read();
+
 		const type = oldProperty.type as SimplePropertyExtensionType;
 
 		// update the property
@@ -238,7 +245,7 @@ export class SimplePropertyRepository {
 	 * handle updated complex property-connections for a property.
 	 * essentially, remove the property from all property sets and add it to the new ones.
 	 *
-	 * // NOTE: if renaming at the same time, make sure to do that first.
+	 * NOTE: if renaming at the same time, make sure to do that first.
 	 * @param  {ComplexProperty} complexPropertyEditConnectionsTo
 	 * @return {Promise<void>}
 	 */

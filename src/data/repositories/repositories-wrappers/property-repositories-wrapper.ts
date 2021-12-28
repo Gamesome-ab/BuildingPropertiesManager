@@ -1,5 +1,5 @@
 import {PropertySet} from '../../models/property-set/property-set.js';
-import {IComplexProperty} from '../../models/property/complex-property.js';
+import {ComplexProperty, IComplexProperty} from '../../models/property/complex-property.js';
 import {IProperty, Property} from '../../models/property/property.js';
 import {PropertyExtension, PropertyExtensionType} from '../../models/property/property-extension.js';
 import {ISimpleProperty} from '../../models/property/simple-property/simple-property.js';
@@ -92,5 +92,22 @@ export class PropertyRepositoriesWrapper {
 		);
 
 		return;
+	}
+
+	/**
+	 * wrapper of complex property relation change handler for all subtypes of Property
+	 * // NOTE: if renaming at the same time, make sure to do that first.
+	 * @param  {ComplexProperty} complexPropertyEditConnectionsTo
+	 * @return {Promise<void>}
+	 */
+	public async onUpdatedComplexPropertyConnections(
+		complexPropertyEditConnectionsTo: ComplexProperty,
+	): Promise<void> {
+		await this.simplePropertyRepository.onUpdatedComplexPropertyConnections(
+			complexPropertyEditConnectionsTo,
+		);
+		await this.complexPropertyRepository.onUpdatedComplexPropertyConnections(
+			complexPropertyEditConnectionsTo,
+		);
 	}
 }
