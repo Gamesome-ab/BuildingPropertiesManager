@@ -3,7 +3,6 @@ import E from 'enquirer';
 import {
 	enquirerPromptWrapper as promptWrapper,
 } from '../../helpers/prompt-helpers.js';
-import {SimplePropertyRepository} from '../../data/repositories/simple-property-repository.js';
 import {Identifier} from '../../data/models/value/simple-value/identifier.js';
 import {Text} from '../../data/models/value/simple-value/text.js';
 import {
@@ -11,6 +10,9 @@ import {
 } from '../../data/models/property/simple-property/simple-property-extension.js';
 import {PropertyExtensionType} from '../../data/models/property/property-extension.js';
 import {Property} from '../../data/models/property/property.js';
+import {
+	PropertyRepositoriesWrapper,
+} from '../../data/repositories/repositories-wrappers/property-repositories-wrapper.js';
 
 const {Input} = E as any;
 
@@ -19,9 +21,8 @@ const namePropertyPrompt = async (
 	propertySubType: SimplePropertyExtensionType | Exclude<PropertyExtensionType, 'SimpleProperty'>,
 	old?: Identifier,
 ): Promise<Identifier> => {
-	const repo = new SimplePropertyRepository(); // TODO: extend to get all properties (probably several repositories)
-	const simpleProperties = await repo.getAll();
-	const simplePropertyNames = simpleProperties.map((p) => p.name.value.toString()); // TODO: search all types of properties
+	const repo = new PropertyRepositoriesWrapper();
+	const propertyNames = await repo.getAllNames();
 
 	const firstMessageLine = `What do you want to name the ${propertySubType}?`;
 
@@ -42,7 +43,7 @@ const namePropertyPrompt = async (
 			if (value.includes('Pset_') || value.includes('pset_')) {
 				return prompt.styles.danger('the name should not contain Pset_ or pset_ (that is for property sets)');
 			}
-			if (simplePropertyNames.includes(value) && old?.value !== value) {
+			if (propertyNames.includes(value) && old?.value !== value) {
 				return prompt.styles.danger('a property with that name already exists');
 			}
 			return true;

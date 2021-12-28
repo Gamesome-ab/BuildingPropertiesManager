@@ -7,14 +7,16 @@ import {
 import {
 	SimplePropertyExtension,
 	SimplePropertyExtensionType,
-	simplePropertyFromData,
+	someSimplePropertyFromData,
 } from '../models/property/simple-property/simple-property-extension.js';
 import {
 	IPropertyEnumeratedValue,
 } from '../models/property/simple-property/property-enumerated-value.js';
 import {PropertySet} from '../models/property-set/property-set.js';
-import {IProperty, Property} from '../models/property/property.js';
 import {PropertySetRepository} from './property-set-repository.js';
+import {PropertyRepositoriesWrapper} from './repositories-wrappers/property-repositories-wrapper.js';
+import {ComplexPropertyRepository} from './complex-property-repository.js';
+import {ComplexProperty} from '../models/property/complex-property.js';
 
 interface DbModel {
 	PropertySingleValue: IPropertySingleValue[]
@@ -39,7 +41,7 @@ type VerifyData<
 /* eslint-enable */
 
 /**
- * Repository for simple properties.
+ * Repository for all extensions of SimpleProperty.
 */
 export class SimplePropertyRepository {
 	private adapter: JSONFile<DbModel>;
@@ -47,7 +49,7 @@ export class SimplePropertyRepository {
 	private store: string = join('./store', 'properties', 'simple-properties.json'); ;
 
 	/**
-     * Initiated with a connection to the property set database.
+     * Initiated with a connection to the SimpleProperty database.
     */
 	constructor() {
 		this.adapter = new JSONFile(this.store);
@@ -63,7 +65,7 @@ export class SimplePropertyRepository {
 		await this.db.read();
 		this.db.data[subType] = this.db.data[subType] || [];
 		return this.db.data[subType].map((property) => {
-			return simplePropertyFromData(property) as T;
+			return someSimplePropertyFromData(property) as T;
 		});
 	}
 
@@ -78,7 +80,7 @@ export class SimplePropertyRepository {
 			this.db.data[simplePropertyType] && properties.push(...this.db.data[simplePropertyType]);
 		});
 		return properties.map((property) => {
-			return simplePropertyFromData(property);
+			return someSimplePropertyFromData(property);
 		});
 	}
 
@@ -110,6 +112,9 @@ export class SimplePropertyRepository {
 	 */
 	public async add<T extends SimpleProperty>(property: T): Promise<T> {
 		await this.db.read();
+
+		// TODO: verify that the name is unique
+
 		if (this.db.data[property.type as SimplePropertyExtensionType]) {
 			this.db.data[property.type as SimplePropertyExtensionType].push(property);
 		} else {
@@ -132,14 +137,17 @@ export class SimplePropertyRepository {
 	): Promise<T> {
 		await this.db.read();
 
+		// validate the update request
+		const propertyRepository = new PropertyRepositoriesWrapper();
 		if (
-			(await this.getAllNames()).includes(newProperty.name.value) &&
+			(await propertyRepository.getAllNames()).includes(newProperty.name.value) &&
 			newProperty.name.value !== oldProperty.name.value
 		) {
 			throw new Error(`Property with name ${newProperty.name.value} already exists`);
 		}
 		const type = oldProperty.type as SimplePropertyExtensionType;
 
+		// update the property
 		let updated: T;
 		this.db.data[type].forEach((p: T) => {
 			if (p.name.value === oldProperty.name.value) {
@@ -149,15 +157,22 @@ export class SimplePropertyRepository {
 			}
 		});
 
+		// update references to this updated property
 		const propertySetRepository = new PropertySetRepository();
 		await propertySetRepository.onPropertyRename(
 			oldProperty.name.value,
 			newProperty.name.value,
 		);
 
+		const complexPropertyRepository = new ComplexPropertyRepository();
+		await complexPropertyRepository.onSimplePropertyRename(
+			oldProperty.name.value,
+			newProperty.name.value,
+		);
+
 		await this.db.write();
 
-		return this.get(updated); // TODO: get this again...
+		return this.get(updated);
 	}
 
 	/**
@@ -173,7 +188,7 @@ export class SimplePropertyRepository {
 		const type = property.type as SimplePropertyExtensionType;
 
 		// let removed: T;
-		this.db.data[type].forEach((p: T, index, object) => {
+		this.db.data[type].forEach((p: T, index: number, object: ISimpleProperty[]) => {
 			if (p.name.value === property.name.value) {
 				object.splice(index, 1);
 				// removed = p;
@@ -185,27 +200,32 @@ export class SimplePropertyRepository {
 			property.name.value,
 		);
 
+		const complexPropertyRepository = new ComplexPropertyRepository();
+		await complexPropertyRepository.onPropertyDelete(
+			property.name.value,
+		);
+
 		await this.db.write();
 
 		return property; // TODO: return removed entity instead of inputted one
 	}
 
 	/**
-     * update connections for a property.
+	 * handle updated propertySet-connections for a property.
 	 * essentially, remove the property from all property sets and add it to the new ones.
-	 * @param  {Property} property
+	 * @param  {SimpleProperty} property
 	 * @param  {PropertySet[]} propertySetsToBeConnectedTo
 	 * @return {Promise<void>} the PropertySets that the property is now part of
 	 */
-	public async updatePropertySetConnections(
-		property: Property | IProperty,
+	public async onUpdatedPropertySetConnections(
+		property: SimpleProperty | ISimpleProperty,
 		propertySetsToBeConnectedTo: PropertySet[],
-	): Promise<PropertySet[]> {
+	): Promise<void> {
 		const propertySetReferences = propertySetsToBeConnectedTo.map((pSet) => pSet.asPropertySetReference());
 		await this.db.read();
 
 		// add to the new property sets
-		this.db.data[property.type].map((p: IProperty) => {
+		this.db.data[property.type].map((p: ISimpleProperty) => {
 			if (p.name.value === property.name.value) {
 				p.partOfPset = propertySetReferences;
 			}
@@ -216,39 +236,41 @@ export class SimplePropertyRepository {
 	}
 
 	/**
-     * Handle renaming of related entity (propertySet of complexProperty)
+     * Handle renaming of related entity (propertySet or complexProperty)
+	 *
 	 * NOTE: this uses the fact that name.value and name.value are same type for both Property and PropertySet
 	 * (i.e StringOfLength<1, 255>) even though they use Label and Identifier respectively. I.e. just replacing
 	 * value is possible.
 	 *
 	 * @param {string} relatedEntityType
-	 * @param {string} oldName
-	 * @param {string} newName
-	 * @return {Promise<void>} a list of SimpleProperty extending types
+	 * @param {StringOfLength<1,255>} oldName
+	 * @param {StringOfLength<1,255>} newName
+	 * @return {Promise<void>}
 	 */
 	public async onRelatedEntityRename(
 		relatedEntityType: 'PropertySet' | 'ComplexProperty',
-		oldName: string,
-		newName: string,
+		oldName: ComplexProperty['name']['value'] | PropertySet['name']['value'],
+		newName: ComplexProperty['name']['value'] | PropertySet['name']['value'],
 	): Promise<void> {
 		await this.db.read();
 
 		Object.keys(SimplePropertyExtension).forEach((simplePropertyType) => {
-			this.db.data[simplePropertyType] && this.db.data[simplePropertyType].forEach((property) => {
-				if (relatedEntityType === 'PropertySet') {
-					property.partOfPset.forEach((pSetReference) => {
-						if (pSetReference.name.value === oldName) {
-							pSetReference.name.value = newName;
-						}
-					});
-				} else if (relatedEntityType === 'ComplexProperty') {
-					property.partOfComplex.forEach((complexPropertyReference) => {
-						if (complexPropertyReference.name.value === oldName) {
-							complexPropertyReference.name.value = newName;
-						}
-					});
-				}
-			});
+			this.db.data[simplePropertyType] &&
+				this.db.data[simplePropertyType].forEach((property: ISimpleProperty) => {
+					if (relatedEntityType === 'PropertySet') {
+						property.partOfPset.forEach((pSetReference) => {
+							if (pSetReference.name.value === oldName) {
+								pSetReference.name.value = newName;
+							}
+						});
+					} else if (relatedEntityType === 'ComplexProperty') {
+						property.partOfComplex.forEach((complexPropertyReference) => {
+							if (complexPropertyReference.name.value === oldName) {
+								complexPropertyReference.name.value = newName;
+							}
+						});
+					}
+				});
 		});
 
 		await this.db.write();
@@ -256,12 +278,16 @@ export class SimplePropertyRepository {
 	}
 
 	/**
-     * Handle removal of related entity (propertySet of complexProperty)
+     * Handle removal of related entity (propertySet or complexProperty)
+	 *
 	 * NOTE: this uses the fact that name.value and name.value are same type for both Property and PropertySet
-	 * even though they use Label and Identifier respectively.
+	 * (i.e StringOfLength<1, 255>) even though they use Label and Identifier respectively. I.e. just replacing
+	 * value is possible.
+	 *
+	 * NOTE: make sure that the user actually wants to remove the property when a referenced entity is removed.
 	 * @param {string} relatedEntityType
 	 * @param {string} name
-	 * @return {Promise<void>} a list of SimpleProperty extending types
+	 * @return {Promise<void>}
 	 */
 	public async onRelatedEntityDelete(
 		relatedEntityType: 'PropertySet' | 'ComplexProperty',

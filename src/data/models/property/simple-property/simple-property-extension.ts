@@ -21,7 +21,7 @@ export type SimplePropertyExtensionType = keyof typeof SimplePropertyExtension;
  * @param  {ISimpleProperty} someSimpleProperty
  * @return {SimpleProperty}
 */
-export const simplePropertyFromData = (someSimpleProperty: ISimpleProperty): SimpleProperty => {
+export const someSimplePropertyFromData = (someSimpleProperty: ISimpleProperty): SimpleProperty => {
 	if (<SimplePropertyExtensionType>someSimpleProperty.type === 'PropertySingleValue') {
 		return PropertySingleValue.fromData(someSimpleProperty as PropertySingleValue);
 	} else if (<SimplePropertyExtensionType>someSimpleProperty.type === 'PropertyEnumeratedValue') {

@@ -14,6 +14,7 @@ import {PropertyExtension, PropertyExtensionType} from '../../data/models/proper
 import {ComplexProperty} from '../../data/models/property/complex-property.js';
 import {handleSelectSimpleProperty} from './select-simple-property.js';
 import {ComplexPropertyRepository} from '../../data/repositories/complex-property-repository.js';
+import {selectComplexPropertyPrompt} from './select-complex-property.js';
 
 const {Select, Input} = E as any;
 
@@ -124,7 +125,6 @@ export const handleAddComplexProperty = async (
 	complexProperty: ComplexProperty = new ComplexProperty(null, null),
 	currentPromptStep: number = 0,
 ): Promise<ComplexProperty | void> => {
-	console.log(colors.red('Started prompt'));
 	const back = () => {
 		return handleAddComplexProperty(
 			complexProperty,
@@ -176,10 +176,7 @@ export const handleAddComplexProperty = async (
 		const action = await promptWrapper(
 			complexPropertyHasPropertiesActionPrompt(complexProperty),
 			null,
-			() => {
-				console.log('doing back from action');
-				return back();
-			},
+			back,
 		);
 
 		switch (action) {
@@ -191,19 +188,22 @@ export const handleAddComplexProperty = async (
 			);
 			if (propertyExtension === null) return loop();
 			if (propertyExtension === 'ComplexProperty') {
-				throw new Error('not implemented');
+				const selectedComplexProperty = await promptWrapper(
+					selectComplexPropertyPrompt(),
+				);
+				if (selectedComplexProperty === null) return loop();
+				complexProperty.hasProperties.push(selectedComplexProperty);
+				console.log(colors.green('Added complex property reference to the complex property'));
 			}
 			if (propertyExtension === 'SimpleProperty') {
 				const simpleProperty = await handleSelectSimpleProperty();
 				if (simpleProperty === null) return loop();
 				complexProperty.hasProperties.push(simpleProperty.asPropertyReference);
-				console.log(colors.green('Added property reference to the complex property'));
+				console.log(colors.green('Added simple property reference to the complex property'));
 			}
 			return loop();
-			break;
 		case ComplexPropertyHasPropertiesAction.CONTINUE:
 			return next();
-			break;
 		}
 	}
 	if (currentPromptStep === 3) {
@@ -213,7 +213,6 @@ export const handleAddComplexProperty = async (
 		if (confirm && confirm.selectedBoolean) return next();
 		else return back();
 	}
-	console.log(colors.red('reached end of prompt'));
 
 	const repo = new ComplexPropertyRepository();
 

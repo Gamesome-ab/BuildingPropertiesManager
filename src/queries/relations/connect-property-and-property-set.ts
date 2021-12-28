@@ -31,5 +31,5 @@ const addConnection = async (
 	propertySets: PropertySet[],
 ) => {
 	const propertySetRepository = new PropertySetRepository();
-	await propertySetRepository.updatePropertyConnections(property, propertySets);
+	await propertySetRepository.updatePropertyConnections(property, propertySets); // will also remove old references
 };

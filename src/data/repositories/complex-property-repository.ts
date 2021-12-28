@@ -2,6 +2,11 @@ import {join} from 'path';
 import {Low, JSONFile} from 'lowdb';
 import _ from 'lodash';
 import {ComplexProperty, IComplexProperty} from '../models/property/complex-property.js';
+import {PropertySet} from '../models/property-set/property-set.js';
+import {Property} from '../models/property/property.js';
+import {SimpleProperty} from '../models/property/simple-property/simple-property.js';
+import {PropertyRepositoriesWrapper} from './repositories-wrappers/property-repositories-wrapper.js';
+import {PropertySetRepository} from './property-set-repository.js';
 
 /**
  * Repository for complex properties.
@@ -86,7 +91,21 @@ export class ComplexPropertyRepository {
 
 		this.db.data[index] = newComplexProperty;
 
-		// TODO: rename all references in properties
+		// check if renamed and not just changed description. if so, rename the references to the property set
+		if (oldComplexProperty.name.value.toString() !== newComplexProperty.name.value.toString()) {
+			const propertyRepositoryWrapper = new PropertyRepositoriesWrapper();
+			await propertyRepositoryWrapper.onRelatedEntityRename(
+				'PropertySet',
+				oldComplexProperty.name.value,
+				newComplexProperty.name.value,
+			);
+
+			const propertySetRepository = new PropertySetRepository();
+			await propertySetRepository.onPropertyRename(
+				oldComplexProperty.name.value,
+				newComplexProperty.name.value,
+			);
+		}
 
 		await this.db.write();
 
@@ -110,14 +129,123 @@ export class ComplexPropertyRepository {
 
 		// TODO: be smarter when checking for success
 		if (removed.length === 1) {
-			// TODO: also remove referenced entities. probably need a helper to find what is referenced
+			// TODO: maybe also remove referenced entities. probably need a helper to find what is referenced
 
 			await this.db.write();
 
 			return ComplexProperty.fromData(removed[0]);
 		} else {
-			console.error('nothing removed since multiple where found:', removed);
+			console.error('nothing removed since multiple or none where found:', removed);
 			return null;
 		}
+	}
+
+	/**
+     * update connections for a property.
+	 * essentially, remove the property from all property sets and add it to the new ones.
+	 * @param  {ComplexProperty} property
+	 * @param  {PropertySet[]} propertySetsToBeConnectedTo
+	 * @return {Promise<void>} the PropertySets that the property is now part of
+	 */
+	public async onUpdatedPropertySetConnections(
+		property: ComplexProperty | IComplexProperty,
+		propertySetsToBeConnectedTo: PropertySet[],
+	): Promise<PropertySet[]> {
+		const propertySetReferences = propertySetsToBeConnectedTo.map((pSet) => pSet.asPropertySetReference());
+		await this.db.read();
+
+		// add to the new property sets
+		this.db.data.map((p: IComplexProperty) => {
+			if (p.name.value === property.name.value) {
+				p.partOfPset = propertySetReferences;
+			}
+		});
+
+		await this.db.write();
+		return;
+	}
+
+	/**
+     * Handle renaming of related entity (propertySet or complexProperty)
+	 *
+	 * NOTE: this uses the fact that name.value and name.value are same type for both Property and PropertySet
+	 * (i.e StringOfLength<1, 255>) even though they use Label and Identifier respectively. I.e. just replacing
+	 * value is possible.
+	 *
+	 * @param {string} relatedEntityType
+	 * @param {StringOfLength<1,255>} oldName
+	 * @param {StringOfLength<1,255>} newName
+	 * @return {Promise<void>} a list of SimpleProperty extending types
+	 */
+	public async onRelatedEntityRename(
+		relatedEntityType: 'PropertySet' | 'ComplexProperty',
+		oldName: ComplexProperty['name']['value'] | PropertySet['name']['value'],
+		newName: ComplexProperty['name']['value'] | PropertySet['name']['value'],
+	): Promise<void> {
+		await this.db.read();
+
+		this.db.data && this.db.data.forEach((property) => {
+			if (relatedEntityType === 'PropertySet') {
+				property.partOfPset.forEach((pSetReference) => {
+					if (pSetReference.name.value === oldName) {
+						pSetReference.name.value = newName;
+					}
+				});
+			} else if (relatedEntityType === 'ComplexProperty') {
+				property.partOfComplex.forEach((complexPropertyReference) => {
+					if (complexPropertyReference.name.value === oldName) {
+						complexPropertyReference.name.value = newName;
+					}
+				});
+			}
+		});
+
+		await this.db.write();
+		return;
+	}
+
+	/**
+     * Handle rename of (simple) property
+	 * @param {StringOfLength<1,255>} oldName
+	 * @param {StringOfLength<1,255>} newName
+	 * @return {Promise<void>} a list of SimpleProperty extending types
+	 */
+	public async onSimplePropertyRename(
+		oldName: SimpleProperty['name']['value'],
+		newName: SimpleProperty['name']['value'],
+	): Promise<void> {
+		await this.db.read();
+
+		this.db.data.forEach((pSet) => {
+			pSet.hasProperties = pSet.hasProperties.map((p) => {
+				if (p.name.value === oldName) {
+					p.name.value = newName;
+				}
+				return p;
+			});
+		});
+
+		await this.db.write();
+		return;
+	}
+
+	/**
+     * Handle removal of property, i.e also remove it from all complex properties
+	 * @param {StringOfLength<1,255>} name
+	 * @return {Promise<void>} a list of SimpleProperty extending types
+	 */
+	public async onPropertyDelete(
+		name: Property['name']['value'],
+	): Promise<void> {
+		await this.db.read();
+
+		this.db.data.forEach((property) => {
+			property.hasProperties = property.hasProperties.filter((p) => {
+				return p.name.value !== name;
+			});
+		});
+
+		await this.db.write();
+		return;
 	}
 }
