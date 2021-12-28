@@ -215,7 +215,7 @@ export class SimplePropertyRepository {
 	 * essentially, remove the property from all property sets and add it to the new ones.
 	 * @param  {SimpleProperty} property
 	 * @param  {PropertySet[]} propertySetsToBeConnectedTo
-	 * @return {Promise<void>} the PropertySets that the property is now part of
+	 * @return {Promise<void>}
 	 */
 	public async onUpdatedPropertySetConnections(
 		property: SimpleProperty | ISimpleProperty,
@@ -224,12 +224,45 @@ export class SimplePropertyRepository {
 		const propertySetReferences = propertySetsToBeConnectedTo.map((pSet) => pSet.asPropertySetReference());
 		await this.db.read();
 
-		// add to the new property sets
 		this.db.data[property.type].map((p: ISimpleProperty) => {
 			if (p.name.value === property.name.value) {
 				p.partOfPset = propertySetReferences;
 			}
 		});
+
+		await this.db.write();
+		return;
+	}
+
+	/**
+	 * handle updated complex property-connections for a property.
+	 * essentially, remove the property from all property sets and add it to the new ones.
+	 *
+	 * // NOTE: if renaming at the same time, make sure to do that first.
+	 * @param  {ComplexProperty} complexPropertyEditConnectionsTo
+	 * @return {Promise<void>}
+	 */
+	public async onUpdatedComplexPropertyConnections(
+		complexPropertyEditConnectionsTo: ComplexProperty,
+	): Promise<void> {
+		const propertyReference = complexPropertyEditConnectionsTo.asPropertyReference;
+		await this.db.read();
+
+		await this.updateReferencesToRelatedEntity(
+			'ComplexProperty',
+			complexPropertyEditConnectionsTo.name.value,
+			'delete',
+		);
+
+		complexPropertyEditConnectionsTo.hasProperties
+			.filter((p) => Object.keys(SimplePropertyExtension).includes(p.type))
+			.map((property) => {
+				this.db.data[property.type].map((p: ISimpleProperty) => {
+					if (p.name.value === property.name.value) {
+						p.partOfComplex.push(propertyReference);
+					}
+				});
+			});
 
 		await this.db.write();
 		return;
@@ -252,28 +285,13 @@ export class SimplePropertyRepository {
 		oldName: ComplexProperty['name']['value'] | PropertySet['name']['value'],
 		newName: ComplexProperty['name']['value'] | PropertySet['name']['value'],
 	): Promise<void> {
-		await this.db.read();
+		await this.updateReferencesToRelatedEntity(
+			relatedEntityType,
+			oldName,
+			'rename',
+			newName,
+		);
 
-		Object.keys(SimplePropertyExtension).forEach((simplePropertyType) => {
-			this.db.data[simplePropertyType] &&
-				this.db.data[simplePropertyType].forEach((property: ISimpleProperty) => {
-					if (relatedEntityType === 'PropertySet') {
-						property.partOfPset.forEach((pSetReference) => {
-							if (pSetReference.name.value === oldName) {
-								pSetReference.name.value = newName;
-							}
-						});
-					} else if (relatedEntityType === 'ComplexProperty') {
-						property.partOfComplex.forEach((complexPropertyReference) => {
-							if (complexPropertyReference.name.value === oldName) {
-								complexPropertyReference.name.value = newName;
-							}
-						});
-					}
-				});
-		});
-
-		await this.db.write();
 		return;
 	}
 
@@ -286,13 +304,39 @@ export class SimplePropertyRepository {
 	 *
 	 * NOTE: make sure that the user actually wants to remove the property when a referenced entity is removed.
 	 * @param {string} relatedEntityType
-	 * @param {string} name
+	 * @param {StringOfLength<1,255>} name - name of the related entity to remove
 	 * @return {Promise<void>}
 	 */
 	public async onRelatedEntityDelete(
 		relatedEntityType: 'PropertySet' | 'ComplexProperty',
-		name: string,
+		name: ComplexProperty['name']['value'] | PropertySet['name']['value'],
 	): Promise<void> {
+		await this.updateReferencesToRelatedEntity(
+			relatedEntityType,
+			name,
+			'delete',
+		);
+		return;
+	}
+
+	/**
+	 * Update all references to a related entity (complex property or property set) across the repository.
+	 * @param {string} relatedEntityType
+	 * @param {StringOfLength<1,255>} name - name of the related entity to remove
+	 * @param {'rename' | 'delete'} action - action to perform on the reference
+	 * @param {StringOfLength<1,255>} nameToRenameTo - name of the related entity to replace
+	 *
+	 */
+	private async updateReferencesToRelatedEntity(
+		relatedEntityType: 'PropertySet' | 'ComplexProperty',
+		name: ComplexProperty['name']['value'] | PropertySet['name']['value'],
+		action: 'rename' | 'delete',
+		nameToRenameTo: ComplexProperty['name']['value'] | PropertySet['name']['value'] = null,
+	) {
+		if (action === 'rename' && !nameToRenameTo) {
+			throw new Error('nameToRenameTo is required when action is rename');
+		}
+
 		await this.db.read();
 
 		Object.keys(SimplePropertyExtension).forEach((simplePropertyType) => {
@@ -301,13 +345,15 @@ export class SimplePropertyRepository {
 					if (relatedEntityType === 'PropertySet') {
 						property.partOfPset.forEach((pSetReference, index, object) => {
 							if (pSetReference.name.value === name) {
-								object.splice(index, 1);
+								if (action === 'delete') object.splice(index, 1);
+								if (action === 'rename') pSetReference.name.value = nameToRenameTo;
 							}
 						});
 					} else if (relatedEntityType === 'ComplexProperty') {
 						property.partOfComplex.forEach((complexPropertyReference, index, object) => {
 							if (complexPropertyReference.name.value === name) {
-								object.splice(index, 1);
+								if (action === 'delete') object.splice(index, 1);
+								if (action === 'rename') complexPropertyReference.name.value = nameToRenameTo;
 							}
 						});
 					}

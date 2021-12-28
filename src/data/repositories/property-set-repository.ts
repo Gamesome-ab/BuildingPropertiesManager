@@ -158,7 +158,7 @@ export class PropertySetRepository {
 				const simplePropertyRepository = new SimplePropertyRepository();
 				await simplePropertyRepository.onRelatedEntityDelete(
 					'PropertySet',
-					propertySet.name.value.toString(),
+					propertySet.name.value,
 				);
 			}
 

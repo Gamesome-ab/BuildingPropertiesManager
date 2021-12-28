@@ -7,6 +7,7 @@ import {Property} from '../models/property/property.js';
 import {SimpleProperty} from '../models/property/simple-property/simple-property.js';
 import {PropertyRepositoriesWrapper} from './repositories-wrappers/property-repositories-wrapper.js';
 import {PropertySetRepository} from './property-set-repository.js';
+import {SimplePropertyRepository} from './simple-property-repository.js';
 
 /**
  * Repository for complex properties.
@@ -86,8 +87,11 @@ export class ComplexPropertyRepository {
 	): Promise<ComplexProperty> {
 		await this.db.read();
 
-		const index = this.db.data.findIndex((pSet) => pSet.name.value === oldComplexProperty.name.value);
+		const index = this.db.data.findIndex((complexProp) => complexProp.name.value === oldComplexProperty.name.value);
 		if (index === -1) throw new Error('ComplexProperty not found');
+
+		// make sure we are not editing the old property
+		const oldComplexPropertyCopy = _.cloneDeep(this.db.data[index]);
 
 		this.db.data[index] = newComplexProperty;
 
@@ -107,7 +111,25 @@ export class ComplexPropertyRepository {
 			);
 		}
 
+		// Write the changes to the database before changing the references,
+		// since there are references in this repository (changed below) that need a predictable name
 		await this.db.write();
+
+		// compare old and new property references and verify if they have changed.
+		const removedReferences = oldComplexPropertyCopy.hasProperties.filter((property) => {
+			return !newComplexProperty.hasProperties.find((p) => p.name.value === property.name.value);
+		});
+		const addedReferences = newComplexProperty.hasProperties.filter((property) => {
+			return !oldComplexPropertyCopy.hasProperties.find((p) => p.name.value === property.name.value);
+		});
+
+		// if so, update the references
+		if (removedReferences.length > 0 || addedReferences.length > 0) {
+			await this.onUpdatedComplexPropertyConnections(newComplexProperty);
+
+			const simplePropertyRepository = new SimplePropertyRepository();
+			await simplePropertyRepository.onUpdatedComplexPropertyConnections(newComplexProperty);
+		}
 
 		return this.get(newComplexProperty);
 	}
@@ -166,6 +188,40 @@ export class ComplexPropertyRepository {
 	}
 
 	/**
+	 * handle updated complex property-connections for a property.
+	 * essentially, remove the property from all property sets and add it to the new ones.
+	 *
+	 * // NOTE: if renaming at the same time, make sure to do that first.
+	 * @param  {ComplexProperty} complexPropertyEditConnectionsTo
+	 * @return {Promise<void>}
+	 */
+	public async onUpdatedComplexPropertyConnections(
+		complexPropertyEditConnectionsTo: ComplexProperty,
+	): Promise<void> {
+		const propertyReference = complexPropertyEditConnectionsTo.asPropertyReference;
+		await this.db.read();
+
+		await this.updateReferencesToRelatedEntity(
+			'ComplexProperty',
+			complexPropertyEditConnectionsTo.name.value,
+			'delete',
+		);
+
+		complexPropertyEditConnectionsTo.hasProperties
+			.filter((p) => p.type === 'ComplexProperty')
+			.map((property) => {
+				this.db.data.map((p: IComplexProperty) => {
+					if (p.name.value === property.name.value) {
+						p.partOfComplex.push(propertyReference);
+					}
+				});
+			});
+
+		await this.db.write();
+		return;
+	}
+
+	/**
      * Handle renaming of related entity (propertySet or complexProperty)
 	 *
 	 * NOTE: this uses the fact that name.value and name.value are same type for both Property and PropertySet
@@ -182,19 +238,49 @@ export class ComplexPropertyRepository {
 		oldName: ComplexProperty['name']['value'] | PropertySet['name']['value'],
 		newName: ComplexProperty['name']['value'] | PropertySet['name']['value'],
 	): Promise<void> {
+		await this.updateReferencesToRelatedEntity(
+			relatedEntityType,
+			oldName,
+			'rename',
+			newName,
+		);
+
+		return;
+	}
+
+	/**
+	 * Update all references to a related entity (complex property or property set) across the repository.
+	 * @param {string} relatedEntityType
+	 * @param {StringOfLength<1,255>} name - name of the related entity to remove
+	 * @param {'rename' | 'delete'} action - action to perform on the reference
+	 * @param {StringOfLength<1,255>} nameToRenameTo - name of the related entity to replace
+	 *
+	 */
+	private async updateReferencesToRelatedEntity(
+		relatedEntityType: 'PropertySet' | 'ComplexProperty',
+		name: ComplexProperty['name']['value'] | PropertySet['name']['value'],
+		action: 'rename' | 'delete',
+		nameToRenameTo: ComplexProperty['name']['value'] | PropertySet['name']['value'] = null,
+	) {
+		if (action === 'rename' && !nameToRenameTo) {
+			throw new Error('nameToRenameTo is required when action is rename');
+		}
+
 		await this.db.read();
 
-		this.db.data && this.db.data.forEach((property) => {
+		this.db.data && this.db.data.forEach((property: IComplexProperty) => {
 			if (relatedEntityType === 'PropertySet') {
-				property.partOfPset.forEach((pSetReference) => {
-					if (pSetReference.name.value === oldName) {
-						pSetReference.name.value = newName;
+				property.partOfPset.forEach((pSetReference, index, object) => {
+					if (pSetReference.name.value === name) {
+						if (action === 'delete') object.splice(index, 1);
+						if (action === 'rename') pSetReference.name.value = nameToRenameTo;
 					}
 				});
 			} else if (relatedEntityType === 'ComplexProperty') {
-				property.partOfComplex.forEach((complexPropertyReference) => {
-					if (complexPropertyReference.name.value === oldName) {
-						complexPropertyReference.name.value = newName;
+				property.partOfComplex.forEach((complexPropertyReference, index, object) => {
+					if (complexPropertyReference.name.value === name) {
+						if (action === 'delete') object.splice(index, 1);
+						if (action === 'rename') complexPropertyReference.name.value = nameToRenameTo;
 					}
 				});
 			}
@@ -216,8 +302,8 @@ export class ComplexPropertyRepository {
 	): Promise<void> {
 		await this.db.read();
 
-		this.db.data.forEach((pSet) => {
-			pSet.hasProperties = pSet.hasProperties.map((p) => {
+		this.db.data.forEach((complexProperty) => {
+			complexProperty.hasProperties = complexProperty.hasProperties.map((p) => {
 				if (p.name.value === oldName) {
 					p.name.value = newName;
 				}
