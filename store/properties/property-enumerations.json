@@ -1,1 +1,986 @@
-[]
+[
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeSmåhus"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Friliggande enbostadshus"
+      },
+      {
+        "type": "Label",
+        "value": "Kedjehus"
+      },
+      {
+        "type": "Label",
+        "value": "Radhus"
+      },
+      {
+        "type": "Label",
+        "value": "Parhus"
+      },
+      {
+        "type": "Label",
+        "value": "Friliggande tvåbostadshus"
+      },
+      {
+        "type": "Label",
+        "value": "Komplementbostadshus"
+      },
+      {
+        "type": "Label",
+        "value": "Ytterligare bostad i enbostadshus"
+      },
+      {
+        "type": "Label",
+        "value": "Okänd"
+      }
+    ]
+  },
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeFlerbostadshus"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Flerbostadshus"
+      },
+      {
+        "type": "Label",
+        "value": "Okänd"
+      }
+    ]
+  },
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeSpecialbostad"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Specialbostadshus för äldre"
+      },
+      {
+        "type": "Label",
+        "value": "Specialbostadshus för funktionsnedsatta"
+      },
+      {
+        "type": "Label",
+        "value": "Specialbostadshus för studenter"
+      },
+      {
+        "type": "Label",
+        "value": "Specialbostadshus för unga"
+      },
+      {
+        "type": "Label",
+        "value": "Okänd"
+      }
+    ]
+  },
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeBostadskomplement"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Komplementbyggnad, utan mänsklig aktivitet"
+      },
+      {
+        "type": "Label",
+        "value": "Komplementbyggnad, mänsklig aktivitet"
+      },
+      {
+        "type": "Label",
+        "value": "Carport"
+      },
+      {
+        "type": "Label",
+        "value": "Garage"
+      },
+      {
+        "type": "Label",
+        "value": "Miljöhus"
+      },
+      {
+        "type": "Label",
+        "value": "Uterum"
+      },
+      {
+        "type": "Label",
+        "value": "Cykelförvaring"
+      },
+      {
+        "type": "Label",
+        "value": "Sjöbod"
+      },
+      {
+        "type": "Label",
+        "value": "Teknisk försörjning"
+      },
+      {
+        "type": "Label",
+        "value": "Okänd"
+      }
+    ]
+  },
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeOkänd"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Okänd"
+      }
+    ]
+  },
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeTrafikOchKommunikation"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Resecentrum"
+      },
+      {
+        "type": "Label",
+        "value": "Järnvägsstation"
+      },
+      {
+        "type": "Label",
+        "value": "Busstation"
+      },
+      {
+        "type": "Label",
+        "value": "Flygterminal"
+      },
+      {
+        "type": "Label",
+        "value": "Färjeterminal"
+      },
+      {
+        "type": "Label",
+        "value": "Lokstall"
+      },
+      {
+        "type": "Label",
+        "value": "Hangar"
+      },
+      {
+        "type": "Label",
+        "value": "Bussgarage"
+      },
+      {
+        "type": "Label",
+        "value": "Fyrbyggnad"
+      },
+      {
+        "type": "Label",
+        "value": "Väderskydd för kollektivtrafik"
+      },
+      {
+        "type": "Label",
+        "value": "Parkeringshus"
+      },
+      {
+        "type": "Label",
+        "value": "Okänd"
+      }
+    ]
+  },
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeSamhällsfunktionskomplement"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Lager"
+      },
+      {
+        "type": "Label",
+        "value": "Miljöhus"
+      },
+      {
+        "type": "Label",
+        "value": "Cykelförvaring"
+      },
+      {
+        "type": "Label",
+        "value": "Garage"
+      },
+      {
+        "type": "Label",
+        "value": "Skärmtak"
+      },
+      {
+        "type": "Label",
+        "value": "Förråd"
+      },
+      {
+        "type": "Label",
+        "value": "Carport"
+      },
+      {
+        "type": "Label",
+        "value": "Offentlig toalett"
+      },
+      {
+        "type": "Label",
+        "value": "Teknisk försörjning"
+      },
+      {
+        "type": "Label",
+        "value": "Okänd"
+      }
+    ]
+  },
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeOffentligFörvaltning"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Kommunal förvaltning"
+      },
+      {
+        "type": "Label",
+        "value": "Regional förvaltning"
+      },
+      {
+        "type": "Label",
+        "value": "Statlig förvaltning"
+      },
+      {
+        "type": "Label",
+        "value": "Polisstation"
+      },
+      {
+        "type": "Label",
+        "value": "Räddningstjänst"
+      },
+      {
+        "type": "Label",
+        "value": "Arkiv"
+      },
+      {
+        "type": "Label",
+        "value": "Kriminalvård"
+      },
+      {
+        "type": "Label",
+        "value": "Okänd"
+      }
+    ]
+  },
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeUtbildning"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Förskola"
+      },
+      {
+        "type": "Label",
+        "value": "Grundskola"
+      },
+      {
+        "type": "Label",
+        "value": "Gymnasium"
+      },
+      {
+        "type": "Label",
+        "value": "Högskola/universitet"
+      },
+      {
+        "type": "Label",
+        "value": "Övrig utbildning"
+      },
+      {
+        "type": "Label",
+        "value": "Okänd"
+      }
+    ]
+  },
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeKultur"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Museum"
+      },
+      {
+        "type": "Label",
+        "value": "Bibliotek"
+      },
+      {
+        "type": "Label",
+        "value": "Konserthus"
+      },
+      {
+        "type": "Label",
+        "value": "Teater"
+      },
+      {
+        "type": "Label",
+        "value": "Biograf"
+      },
+      {
+        "type": "Label",
+        "value": "Hembygdsgård"
+      },
+      {
+        "type": "Label",
+        "value": "Samlingslokal"
+      },
+      {
+        "type": "Label",
+        "value": "Okänd"
+      }
+    ]
+  },
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeIdrott"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Badhus"
+      },
+      {
+        "type": "Label",
+        "value": "Multiarena"
+      },
+      {
+        "type": "Label",
+        "value": "Ridhus"
+      },
+      {
+        "type": "Label",
+        "value": "Sporthall"
+      },
+      {
+        "type": "Label",
+        "value": "Ishall"
+      },
+      {
+        "type": "Label",
+        "value": "Komplement till idrottsanläggning"
+      },
+      {
+        "type": "Label",
+        "value": "Okänd"
+      }
+    ]
+  },
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeHälsaOchSjukvård"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Vård- och omsorgsboende"
+      },
+      {
+        "type": "Label",
+        "value": "Sjukhus"
+      },
+      {
+        "type": "Label",
+        "value": "Primärvård"
+      },
+      {
+        "type": "Label",
+        "value": "Tandvård"
+      },
+      {
+        "type": "Label",
+        "value": "Djurklinik"
+      },
+      {
+        "type": "Label",
+        "value": "Djursjukhus"
+      },
+      {
+        "type": "Label",
+        "value": "Okänd"
+      }
+    ]
+  },
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeSamfund"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Samfund"
+      },
+      {
+        "type": "Label",
+        "value": "Krematorium"
+      },
+      {
+        "type": "Label",
+        "value": "Okänd"
+      }
+    ]
+  },
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeTekniskFörsörjning"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Okänd "
+      }
+    ]
+  },
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeLogiOchRestaurang"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Hotell"
+      },
+      {
+        "type": "Label",
+        "value": "Vandrarhem"
+      },
+      {
+        "type": "Label",
+        "value": "Härbärge"
+      },
+      {
+        "type": "Label",
+        "value": "Servicebyggnad"
+      },
+      {
+        "type": "Label",
+        "value": "Stuga"
+      },
+      {
+        "type": "Label",
+        "value": "Pensionat"
+      },
+      {
+        "type": "Label",
+        "value": "Konferens"
+      },
+      {
+        "type": "Label",
+        "value": "Restaurang"
+      },
+      {
+        "type": "Label",
+        "value": "Okänd"
+      }
+    ]
+  },
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeKontor"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Kontor"
+      },
+      {
+        "type": "Label",
+        "value": "Okänd"
+      }
+    ]
+  },
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeHandel"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Drivmedel"
+      },
+      {
+        "type": "Label",
+        "value": "Fordonstvätt"
+      },
+      {
+        "type": "Label",
+        "value": "Partihandel"
+      },
+      {
+        "type": "Label",
+        "value": "Köpcentrum"
+      },
+      {
+        "type": "Label",
+        "value": "Detaljhandel livsmedel"
+      },
+      {
+        "type": "Label",
+        "value": "Detaljhandel med skrymmande varor"
+      },
+      {
+        "type": "Label",
+        "value": "Detaljhandel utom livsmedel"
+      },
+      {
+        "type": "Label",
+        "value": "Detaljhandel utom skrymmande varor"
+      },
+      {
+        "type": "Label",
+        "value": "Detaljhandel utom livsmedel eller skrymmande varor"
+      },
+      {
+        "type": "Label",
+        "value": "Mässhall"
+      },
+      {
+        "type": "Label",
+        "value": "Okänd"
+      }
+    ]
+  },
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeVerksamhetskomplement"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Lager"
+      },
+      {
+        "type": "Label",
+        "value": "Miljöhus"
+      },
+      {
+        "type": "Label",
+        "value": "Cykelförvaring"
+      },
+      {
+        "type": "Label",
+        "value": "Garage"
+      },
+      {
+        "type": "Label",
+        "value": "Kundvagnsparkering"
+      },
+      {
+        "type": "Label",
+        "value": "Skärmtak"
+      },
+      {
+        "type": "Label",
+        "value": "Förråd"
+      },
+      {
+        "type": "Label",
+        "value": "Teknisk försörjning"
+      },
+      {
+        "type": "Label",
+        "value": "Okänd"
+      }
+    ]
+  },
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeEnergiförsörjning"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Energiförsörjning"
+      }
+    ]
+  },
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeGenerellIndustri"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Tillverkning"
+      },
+      {
+        "type": "Label",
+        "value": "Cistern"
+      },
+      {
+        "type": "Label",
+        "value": "Silo"
+      },
+      {
+        "type": "Label",
+        "value": "Kylhus"
+      },
+      {
+        "type": "Label",
+        "value": "Lager"
+      },
+      {
+        "type": "Label",
+        "value": "Lastkaj"
+      },
+      {
+        "type": "Label",
+        "value": "Okänd"
+      }
+    ]
+  },
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeIndustrikomplement"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Miljöhus"
+      },
+      {
+        "type": "Label",
+        "value": "Cykelförvaring"
+      },
+      {
+        "type": "Label",
+        "value": "Garage"
+      },
+      {
+        "type": "Label",
+        "value": "Skärmtak"
+      },
+      {
+        "type": "Label",
+        "value": "Förråd"
+      },
+      {
+        "type": "Label",
+        "value": "Teknisk försörjning"
+      },
+      {
+        "type": "Label",
+        "value": "Okänd"
+      }
+    ]
+  },
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeSilo"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Silo"
+      }
+    ]
+  },
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeMaskinhall"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Maskinhall"
+      }
+    ]
+  },
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeCistern"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Cistern"
+      }
+    ]
+  },
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeFiske"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Båthus"
+      },
+      {
+        "type": "Label",
+        "value": "Redskapsbod"
+      }
+    ]
+  },
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeRenskötsel"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Renvaktarstuga"
+      }
+    ]
+  },
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeVäxthus"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Växthus"
+      }
+    ]
+  },
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeDjurstall"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Djurstall"
+      }
+    ]
+  },
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeLantbrukskomplement"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Lager"
+      },
+      {
+        "type": "Label",
+        "value": "Miljöhus"
+      },
+      {
+        "type": "Label",
+        "value": "Cykelförvaring"
+      },
+      {
+        "type": "Label",
+        "value": "Garage"
+      },
+      {
+        "type": "Label",
+        "value": "Skärmtak"
+      },
+      {
+        "type": "Label",
+        "value": "Förråd"
+      },
+      {
+        "type": "Label",
+        "value": "Teknisk försörjning"
+      },
+      {
+        "type": "Label",
+        "value": "Okänd"
+      }
+    ]
+  },
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeJordkällare"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Jordkällare"
+      }
+    ]
+  },
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeFriluftsbyggnad"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Vindskydd"
+      },
+      {
+        "type": "Label",
+        "value": "Värmestuga, Raststuga"
+      }
+    ]
+  },
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeKolonistuga"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Kolonistuga"
+      }
+    ]
+  },
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeFritidsbyggnad"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Sjöbod"
+      },
+      {
+        "type": "Label",
+        "value": "Fäbod"
+      },
+      {
+        "type": "Label",
+        "value": "Jaktstuga"
+      }
+    ]
+  },
+  {
+    "type": "PropertyEnumeration",
+    "name": {
+      "type": "Label",
+      "value": "PEnum_PurposeByggnadsverk"
+    },
+    "unit": null,
+    "enumerationValues": [
+      {
+        "type": "Label",
+        "value": "Plank"
+      },
+      {
+        "type": "Label",
+        "value": "Mur"
+      },
+      {
+        "type": "Label",
+        "value": "Mast"
+      },
+      {
+        "type": "Label",
+        "value": "Torn"
+      }
+    ]
+  }
+]

@@ -1,1 +1,506 @@
-[]
+[
+  {
+    "type": "ComplexProperty",
+    "name": {
+      "type": "Identifier",
+      "value": "Bostad"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Allows selecting purposes in the sub-level of: Bostad"
+    },
+    "partOfPset": [],
+    "partOfComplex": [
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "MainPurpose"
+        },
+        "type": "ComplexProperty"
+      }
+    ],
+    "usageName": {
+      "type": "Identifier",
+      "value": "Bostad"
+    },
+    "hasProperties": [
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Småhus"
+        },
+        "type": "PropertyEnumeratedValue"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Flerbostadshus"
+        },
+        "type": "PropertyEnumeratedValue"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Specialbostad"
+        },
+        "type": "PropertyEnumeratedValue"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Bostadskomplement"
+        },
+        "type": "PropertyEnumeratedValue"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Okänd"
+        },
+        "type": "PropertyEnumeratedValue"
+      }
+    ]
+  },
+  {
+    "type": "ComplexProperty",
+    "name": {
+      "type": "Identifier",
+      "value": "Samhällsfunktion"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Allows selecting purposes in the sub-level of: Samhällsfunktion"
+    },
+    "partOfPset": [],
+    "partOfComplex": [
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "MainPurpose"
+        },
+        "type": "ComplexProperty"
+      }
+    ],
+    "usageName": {
+      "type": "Identifier",
+      "value": "Samhällsfunktion"
+    },
+    "hasProperties": [
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "TrafikOchKommunikation"
+        },
+        "type": "PropertyEnumeratedValue"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Samhällsfunktionskomplement"
+        },
+        "type": "PropertyEnumeratedValue"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "OffentligFörvaltning"
+        },
+        "type": "PropertyEnumeratedValue"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Utbildning"
+        },
+        "type": "PropertyEnumeratedValue"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Kultur"
+        },
+        "type": "PropertyEnumeratedValue"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Idrott"
+        },
+        "type": "PropertyEnumeratedValue"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "HälsaOchSjukvård"
+        },
+        "type": "PropertyEnumeratedValue"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Samfund"
+        },
+        "type": "PropertyEnumeratedValue"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "TekniskFörsörjning"
+        },
+        "type": "PropertyEnumeratedValue"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Okänd"
+        },
+        "type": "PropertyEnumeratedValue"
+      }
+    ]
+  },
+  {
+    "type": "ComplexProperty",
+    "name": {
+      "type": "Identifier",
+      "value": "Verksamhet"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Allows selecting purposes in the sub-level of: Verksamhet"
+    },
+    "partOfPset": [],
+    "partOfComplex": [
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "MainPurpose"
+        },
+        "type": "ComplexProperty"
+      }
+    ],
+    "usageName": {
+      "type": "Identifier",
+      "value": "Verksamhet"
+    },
+    "hasProperties": [
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "LogiOchRestaurang"
+        },
+        "type": "PropertyEnumeratedValue"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Kontor"
+        },
+        "type": "PropertyEnumeratedValue"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Handel"
+        },
+        "type": "PropertyEnumeratedValue"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Verksamhetskomplement"
+        },
+        "type": "PropertyEnumeratedValue"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Okänd"
+        },
+        "type": "PropertyEnumeratedValue"
+      }
+    ]
+  },
+  {
+    "type": "ComplexProperty",
+    "name": {
+      "type": "Identifier",
+      "value": "Industri"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Allows selecting purposes in the sub-level of: Industri"
+    },
+    "partOfPset": [],
+    "partOfComplex": [
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "MainPurpose"
+        },
+        "type": "ComplexProperty"
+      }
+    ],
+    "usageName": {
+      "type": "Identifier",
+      "value": "Industri"
+    },
+    "hasProperties": [
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Energiförsörjning"
+        },
+        "type": "PropertyEnumeratedValue"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "GenerellIndustri"
+        },
+        "type": "PropertyEnumeratedValue"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Industrikomplement"
+        },
+        "type": "PropertyEnumeratedValue"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Okänd"
+        },
+        "type": "PropertyEnumeratedValue"
+      }
+    ]
+  },
+  {
+    "type": "ComplexProperty",
+    "name": {
+      "type": "Identifier",
+      "value": "Lantbruk"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Allows selecting purposes in the sub-level of: Lantbruk"
+    },
+    "partOfPset": [],
+    "partOfComplex": [
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "MainPurpose"
+        },
+        "type": "ComplexProperty"
+      }
+    ],
+    "usageName": {
+      "type": "Identifier",
+      "value": "Lantbruk"
+    },
+    "hasProperties": [
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Silo"
+        },
+        "type": "PropertyEnumeratedValue"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Maskinhall"
+        },
+        "type": "PropertyEnumeratedValue"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Cistern"
+        },
+        "type": "PropertyEnumeratedValue"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Fiske"
+        },
+        "type": "PropertyEnumeratedValue"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Renskötsel"
+        },
+        "type": "PropertyEnumeratedValue"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Växthus"
+        },
+        "type": "PropertyEnumeratedValue"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Djurstall"
+        },
+        "type": "PropertyEnumeratedValue"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Lantbrukskomplement"
+        },
+        "type": "PropertyEnumeratedValue"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Okänd"
+        },
+        "type": "PropertyEnumeratedValue"
+      }
+    ]
+  },
+  {
+    "type": "ComplexProperty",
+    "name": {
+      "type": "Identifier",
+      "value": "ÖVrigaByggnadsverk"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Allows selecting purposes in the sub-level of: Övriga byggnadsverk"
+    },
+    "partOfPset": [],
+    "partOfComplex": [
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "MainPurpose"
+        },
+        "type": "ComplexProperty"
+      }
+    ],
+    "usageName": {
+      "type": "Identifier",
+      "value": "ÖVrigaByggnadsverk"
+    },
+    "hasProperties": [
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Jordkällare"
+        },
+        "type": "PropertyEnumeratedValue"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Friluftsbyggnad"
+        },
+        "type": "PropertyEnumeratedValue"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Kolonistuga"
+        },
+        "type": "PropertyEnumeratedValue"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Fritidsbyggnad"
+        },
+        "type": "PropertyEnumeratedValue"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Byggnadsverk"
+        },
+        "type": "PropertyEnumeratedValue"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Okänd"
+        },
+        "type": "PropertyEnumeratedValue"
+      }
+    ]
+  },
+  {
+    "type": "ComplexProperty",
+    "name": {
+      "type": "Identifier",
+      "value": "MainPurpose"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Contains all purposes in the property catalogue.This property has references to all sub-purposes, which in turn holds an enum of the last level."
+    },
+    "partOfPset": [
+      {
+        "name": {
+          "type": "Label",
+          "value": "SweMapAuthPset_PurposeCatalogue"
+        },
+        "type": "PropertySet"
+      }
+    ],
+    "partOfComplex": [],
+    "usageName": {
+      "type": "Identifier",
+      "value": "MainPurpose"
+    },
+    "hasProperties": [
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Bostad"
+        },
+        "type": "ComplexProperty"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Samhällsfunktion"
+        },
+        "type": "ComplexProperty"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Verksamhet"
+        },
+        "type": "ComplexProperty"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Industri"
+        },
+        "type": "ComplexProperty"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "Lantbruk"
+        },
+        "type": "ComplexProperty"
+      },
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "ÖVrigaByggnadsverk"
+        },
+        "type": "ComplexProperty"
+      }
+    ]
+  }
+]

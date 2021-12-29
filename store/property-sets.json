@@ -1,1 +1,22 @@
-[]
+[
+  {
+    "type": "PropertySet",
+    "name": {
+      "type": "Label",
+      "value": "SweMapAuthPset_PurposeCatalogue"
+    },
+    "description": {
+      "type": "Text",
+      "value": "The purpose catalogue is a collection of properties that describe the purpose of a building or part of a building."
+    },
+    "hasProperties": [
+      {
+        "name": {
+          "type": "Identifier",
+          "value": "MainPurpose"
+        },
+        "type": "ComplexProperty"
+      }
+    ]
+  }
+]

@@ -1,1 +1,991 @@
-{}
+{
+  "PropertyEnumeratedValue": [
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "Småhus"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Småhus"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "Bostad"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeSmåhus"
+        },
+        "type": "PropertyEnumeration"
+      }
+    },
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "Flerbostadshus"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Flerbostadshus"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "Bostad"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeFlerbostadshus"
+        },
+        "type": "PropertyEnumeration"
+      }
+    },
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "Specialbostad"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Specialbostad"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "Bostad"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeSpecialbostad"
+        },
+        "type": "PropertyEnumeration"
+      }
+    },
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "Bostadskomplement"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Bostadskomplement"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "Bostad"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeBostadskomplement"
+        },
+        "type": "PropertyEnumeration"
+      }
+    },
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "Okänd"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Okänd"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "Bostad"
+          },
+          "type": "ComplexProperty"
+        },
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "Samhällsfunktion"
+          },
+          "type": "ComplexProperty"
+        },
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "Verksamhet"
+          },
+          "type": "ComplexProperty"
+        },
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "Industri"
+          },
+          "type": "ComplexProperty"
+        },
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "Lantbruk"
+          },
+          "type": "ComplexProperty"
+        },
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "ÖVrigaByggnadsverk"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeOkänd"
+        },
+        "type": "PropertyEnumeration"
+      }
+    },
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "TrafikOchKommunikation"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Trafik och Kommunikation"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "Samhällsfunktion"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeTrafikOchKommunikation"
+        },
+        "type": "PropertyEnumeration"
+      }
+    },
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "Samhällsfunktionskomplement"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Samhällsfunktionskomplement"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "Samhällsfunktion"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeSamhällsfunktionskomplement"
+        },
+        "type": "PropertyEnumeration"
+      }
+    },
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "OffentligFörvaltning"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Offentlig förvaltning"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "Samhällsfunktion"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeOffentligFörvaltning"
+        },
+        "type": "PropertyEnumeration"
+      }
+    },
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "Utbildning"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Utbildning"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "Samhällsfunktion"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeUtbildning"
+        },
+        "type": "PropertyEnumeration"
+      }
+    },
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "Kultur"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Kultur"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "Samhällsfunktion"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeKultur"
+        },
+        "type": "PropertyEnumeration"
+      }
+    },
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "Idrott"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Idrott"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "Samhällsfunktion"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeIdrott"
+        },
+        "type": "PropertyEnumeration"
+      }
+    },
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "HälsaOchSjukvård"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Hälsa och sjukvård"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "Samhällsfunktion"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeHälsaOchSjukvård"
+        },
+        "type": "PropertyEnumeration"
+      }
+    },
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "Samfund"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Samfund"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "Samhällsfunktion"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeSamfund"
+        },
+        "type": "PropertyEnumeration"
+      }
+    },
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "TekniskFörsörjning"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Teknisk försörjning"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "Samhällsfunktion"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeTekniskFörsörjning"
+        },
+        "type": "PropertyEnumeration"
+      }
+    },
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "LogiOchRestaurang"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Logi och restaurang"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "Verksamhet"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeLogiOchRestaurang"
+        },
+        "type": "PropertyEnumeration"
+      }
+    },
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "Kontor"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Kontor"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "Verksamhet"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeKontor"
+        },
+        "type": "PropertyEnumeration"
+      }
+    },
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "Handel"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Handel"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "Verksamhet"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeHandel"
+        },
+        "type": "PropertyEnumeration"
+      }
+    },
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "Verksamhetskomplement"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Verksamhetskomplement"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "Verksamhet"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeVerksamhetskomplement"
+        },
+        "type": "PropertyEnumeration"
+      }
+    },
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "Energiförsörjning"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Energiförsörjning"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "Industri"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeEnergiförsörjning"
+        },
+        "type": "PropertyEnumeration"
+      }
+    },
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "GenerellIndustri"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Generell Industri"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "Industri"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeGenerellIndustri"
+        },
+        "type": "PropertyEnumeration"
+      }
+    },
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "Industrikomplement"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Industrikomplement"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "Industri"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeIndustrikomplement"
+        },
+        "type": "PropertyEnumeration"
+      }
+    },
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "Silo"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Silo"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "Lantbruk"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeSilo"
+        },
+        "type": "PropertyEnumeration"
+      }
+    },
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "Maskinhall"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Maskinhall"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "Lantbruk"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeMaskinhall"
+        },
+        "type": "PropertyEnumeration"
+      }
+    },
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "Cistern"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Cistern"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "Lantbruk"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeCistern"
+        },
+        "type": "PropertyEnumeration"
+      }
+    },
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "Fiske"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Fiske"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "Lantbruk"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeFiske"
+        },
+        "type": "PropertyEnumeration"
+      }
+    },
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "Renskötsel"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Renskötsel"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "Lantbruk"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeRenskötsel"
+        },
+        "type": "PropertyEnumeration"
+      }
+    },
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "Växthus"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Växthus"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "Lantbruk"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeVäxthus"
+        },
+        "type": "PropertyEnumeration"
+      }
+    },
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "Djurstall"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Djurstall"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "Lantbruk"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeDjurstall"
+        },
+        "type": "PropertyEnumeration"
+      }
+    },
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "Lantbrukskomplement"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Lantbrukskomplement"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "Lantbruk"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeLantbrukskomplement"
+        },
+        "type": "PropertyEnumeration"
+      }
+    },
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "Jordkällare"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Jordkällare"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "ÖVrigaByggnadsverk"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeJordkällare"
+        },
+        "type": "PropertyEnumeration"
+      }
+    },
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "Friluftsbyggnad"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Friluftsbyggnad"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "ÖVrigaByggnadsverk"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeFriluftsbyggnad"
+        },
+        "type": "PropertyEnumeration"
+      }
+    },
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "Kolonistuga"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Kolonistuga"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "ÖVrigaByggnadsverk"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeKolonistuga"
+        },
+        "type": "PropertyEnumeration"
+      }
+    },
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "Fritidsbyggnad"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Fritidsbyggnad"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "ÖVrigaByggnadsverk"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeFritidsbyggnad"
+        },
+        "type": "PropertyEnumeration"
+      }
+    },
+    {
+      "type": "PropertyEnumeratedValue",
+      "name": {
+        "type": "Identifier",
+        "value": "Byggnadsverk"
+      },
+      "description": {
+        "type": "Text",
+        "value": "Allows selecting purposes in the sub-level of: Byggnadsverk"
+      },
+      "partOfPset": [],
+      "partOfComplex": [
+        {
+          "name": {
+            "type": "Identifier",
+            "value": "ÖVrigaByggnadsverk"
+          },
+          "type": "ComplexProperty"
+        }
+      ],
+      "enumerationReference": {
+        "name": {
+          "type": "Label",
+          "value": "PEnum_PurposeByggnadsverk"
+        },
+        "type": "PropertyEnumeration"
+      }
+    }
+  ]
+}
