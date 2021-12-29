@@ -130,14 +130,16 @@ const purposesTableThree = [
 ];
 
 const purposesTableFour = [
+	// EDIT: Note that Industri in Nivå 2 has been changed to Generell Industri to not interfer with
+	// the purpose in Nivå 1 (property names must be globally unique).
 	['Industri', 'Energiförsörjning', 'Energiförsörjning'],
-	['Industri', 'Industri', 'Tillverkning'],
-	['Industri', 'Industri', 'Cistern'],
-	['Industri', 'Industri', 'Silo'],
-	['Industri', 'Industri', 'Kylhus'],
-	['Industri', 'Industri', 'Lager'],
-	['Industri', 'Industri', 'Lastkaj'],
-	['Industri', 'Industri', 'Okänd'],
+	['Industri', 'Generell Industri', 'Tillverkning'],
+	['Industri', 'Generell Industri', 'Cistern'],
+	['Industri', 'Generell Industri', 'Silo'],
+	['Industri', 'Generell Industri', 'Kylhus'],
+	['Industri', 'Generell Industri', 'Lager'],
+	['Industri', 'Generell Industri', 'Lastkaj'],
+	['Industri', 'Generell Industri', 'Okänd'],
 	['Industri', 'Industrikomplement', 'Miljöhus'],
 	['Industri', 'Industrikomplement', 'Cykelförvaring'],
 	['Industri', 'Industrikomplement', 'Garage'],
