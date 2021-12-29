@@ -81,4 +81,4 @@ export class PropertyReference {
 		this.type = property.type;
 	}
 }
-export interface PropertyReference extends Omit<Property, 'partOfPset' | 'partOfComplex' | 'description'> {}
+export interface PropertyReference extends Pick<Property, 'name' | 'type'> {}

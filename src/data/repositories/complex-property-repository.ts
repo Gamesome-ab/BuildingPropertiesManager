@@ -7,7 +7,6 @@ import {Property} from '../models/property/property.js';
 import {SimpleProperty} from '../models/property/simple-property/simple-property.js';
 import {PropertyRepositoriesWrapper} from './repositories-wrappers/property-repositories-wrapper.js';
 import {PropertySetRepository} from './property-set-repository.js';
-import {SimplePropertyRepository} from './simple-property-repository.js';
 
 /**
  * Repository for complex properties.
@@ -144,7 +143,6 @@ export class ComplexPropertyRepository {
 			return !oldComplexPropertyCopy.hasProperties.find((p) => p.name.value === property.name.value);
 		});
 
-		console.log('update includes removals and additions: ', removedReferences, addedReferences);
 		// if so, update the references
 		if (removedReferences.length > 0 || addedReferences.length > 0) {
 			const propertyRepositoryWrapper = new PropertyRepositoriesWrapper();
@@ -221,6 +219,7 @@ export class ComplexPropertyRepository {
 		complexPropertyEditConnectionsTo: ComplexProperty,
 	): Promise<void> {
 		const propertyReference = complexPropertyEditConnectionsTo.asPropertyReference;
+
 		await this.db.read();
 
 		await this.updateReferencesToRelatedEntity(
@@ -230,10 +229,10 @@ export class ComplexPropertyRepository {
 		);
 
 		complexPropertyEditConnectionsTo.hasProperties
-			.filter((p) => p.type === 'ComplexProperty')
-			.map((property) => {
+			.filter((propertyInComplex) => propertyInComplex.type === 'ComplexProperty')
+			.map((complexPropertyInComplex) => {
 				this.db.data.map((p: IComplexProperty) => {
-					if (p.name.value === property.name.value) {
+					if (p.name.value === complexPropertyInComplex.name.value) {
 						p.partOfComplex.push(propertyReference);
 					}
 				});

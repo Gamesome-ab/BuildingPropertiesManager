@@ -192,7 +192,7 @@ export const handleAddComplexProperty = async (
 					selectComplexPropertyPrompt(),
 				);
 				if (selectedComplexProperty === null) return loop();
-				complexProperty.hasProperties.push(selectedComplexProperty);
+				complexProperty.hasProperties.push(selectedComplexProperty.asPropertyReference);
 				console.log(colors.green('Added complex property reference to the complex property'));
 			}
 			if (propertyExtension === 'SimpleProperty') {
