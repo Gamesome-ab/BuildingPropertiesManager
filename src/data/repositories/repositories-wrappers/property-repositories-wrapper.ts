@@ -97,17 +97,17 @@ export class PropertyRepositoriesWrapper {
 	/**
 	 * wrapper of complex property relation change handler for all subtypes of Property
 	 * // NOTE: if renaming at the same time, make sure to do that first.
-	 * @param  {ComplexProperty} complexPropertyEditConnectionsTo
+	 * @param  {ComplexProperty} complexPropertyToEditConnectionsTo
 	 * @return {Promise<void>}
 	 */
 	public async onUpdatedComplexPropertyConnections(
-		complexPropertyEditConnectionsTo: ComplexProperty,
+		complexPropertyToEditConnectionsTo: ComplexProperty,
 	): Promise<void> {
 		await this.simplePropertyRepository.onUpdatedComplexPropertyConnections(
-			complexPropertyEditConnectionsTo,
+			complexPropertyToEditConnectionsTo,
 		);
 		await this.complexPropertyRepository.onUpdatedComplexPropertyConnections(
-			complexPropertyEditConnectionsTo,
+			complexPropertyToEditConnectionsTo,
 		);
 	}
 }

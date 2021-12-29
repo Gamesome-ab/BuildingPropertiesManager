@@ -57,6 +57,8 @@ export class PropertySetRepository {
 		this.db.data.push(propertySet);
 		await this.db.write();
 
+		// TODO: if propertySet has properties, we need to add references to them also!
+
 		return propertySet;
 	}
 
