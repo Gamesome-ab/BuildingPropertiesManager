@@ -1,34 +1,29 @@
 {
-	"name": "building-properties-manager",
+	"name": "@building-properties-manager/mono-repo",
 	"version": "1.0.0",
-	"description": "manager for structured building properties - based on IFC, but highly simplified. Should convert nicely both ways though.",
-	"exports": "./build/cli.js",
-	"type": "module",
+	"description": " Data, models and clients for managing structured building properties - based on IFC, but highly simplified. Should convert nicely both ways though.",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"build": "tsc --build",
-		"start": "npx tsc && node ./build/cli.js interactive",
-		"cli": "npx tsc && node ./build/cli.js"
+		"build": "npm run build --workspaces --if-present",
+		"start": "npm run start:cli",
+		"start:cli": "npm run start --workspace=clients/cli",
+		"clean": "npm run clean --workspaces --if-present"
 	},
 	"author": "Johan Svensson",
 	"license": "MIT",
+	"private": true,
+	"workspaces": [
+		"src",
+		"clients/cli"
+	],
 	"devDependencies": {
-		"@types/lodash": "^4.14.177",
-		"@types/node": "^16.11.7",
-		"@types/yargs": "^17.0.5",
 		"@typescript-eslint/eslint-plugin": "^5.3.1",
 		"@typescript-eslint/parser": "^5.3.1",
 		"eslint": "^8.2.0",
 		"eslint-config-google": "^0.14.0",
 		"eslint-config-prettier": "^8.3.0",
 		"prettier": "2.4.1",
+		"rimraf": "^3.0.2",
 		"typescript": "^4.4.4"
-	},
-	"dependencies": {
-		"ansi-colors-es6": "^5.0.0",
-		"enquirer": "^2.3.6",
-		"lodash": "^4.17.21",
-		"lowdb": "^3.0.0",
-		"yargs": "^17.2.1"
 	}
 }

@@ -24,6 +24,8 @@ coverage.*
 
 # Artifacts
 build/*
+dist/*
+.tsbuildinfo
 
 # Dependency directory
 node_modules
