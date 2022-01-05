@@ -23,9 +23,9 @@ coverage.*
 .lock-wscript
 
 # Artifacts
-build/*
-dist/*
-.tsbuildinfo
+clients/cli/build/*
+src/dist/*
+*.tsbuildinfo
 
 # Dependency directory
 node_modules
