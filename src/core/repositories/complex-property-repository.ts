@@ -7,6 +7,7 @@ import {Property} from '../models/property/property.js';
 import {SimpleProperty} from '../models/property/simple-property/simple-property.js';
 import {PropertyRepositoriesWrapper} from './repositories-wrappers/property-repositories-wrapper.js';
 import {PropertySetRepository} from './property-set-repository.js';
+import {storeDir} from '../helpers/get-store-path.js';
 
 /**
  * Repository for complex properties.
@@ -14,7 +15,7 @@ import {PropertySetRepository} from './property-set-repository.js';
 export class ComplexPropertyRepository {
 	private adapter: JSONFile<IComplexProperty[]>;
 	private db: Low<IComplexProperty[]>;
-	private store: string = join('./store', 'properties', 'complex-properties.json');
+	private store: string = join(storeDir, 'properties', 'complex-properties.json');
 
 	/**
      * Initiated with a connection to the property set database.

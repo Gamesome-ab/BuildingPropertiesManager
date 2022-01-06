@@ -17,6 +17,7 @@ import {PropertySetRepository} from './property-set-repository.js';
 import {PropertyRepositoriesWrapper} from './repositories-wrappers/property-repositories-wrapper.js';
 import {ComplexPropertyRepository} from './complex-property-repository.js';
 import {ComplexProperty} from '../models/property/complex-property.js';
+import {storeDir} from '../helpers/get-store-path.js';
 
 interface DbModel {
 	PropertySingleValue: IPropertySingleValue[]
@@ -46,7 +47,7 @@ type VerifyData<
 export class SimplePropertyRepository {
 	private adapter: JSONFile<DbModel>;
 	private db: Low<DbModel>;
-	private store: string = join('./store', 'properties', 'simple-properties.json'); ;
+	private store: string = join(storeDir, 'properties', 'simple-properties.json'); ;
 
 	/**
      * Initiated with a connection to the SimpleProperty database.

@@ -5,6 +5,8 @@ import {
 	PropertySetRepository,
 } from '@building-properties-manager/core';
 
+import {Logger} from '../../helpers/prompt-helpers.js';
+
 const {Select, MultiSelect} = E as any;
 
 export const selectPropertySetPrompt = async (
@@ -16,7 +18,8 @@ export const selectPropertySetPrompt = async (
 	const pSets = await propertySetRepository.getAll();
 
 	if (pSets.length === 0) {
-		throw new Error('No property sets found');
+		Logger.warn('No property sets found');
+		return null;
 	}
 
 	if (pSets.length >= 1) {

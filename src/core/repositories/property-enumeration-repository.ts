@@ -2,6 +2,7 @@ import {join} from 'path';
 import {Low, JSONFile} from 'lowdb';
 import _ from 'lodash';
 import {IPropertyEnumeration, PropertyEnumeration} from '../models/property/property-enumeration.js';
+import {storeDir} from '../helpers/get-store-path.js';
 
 /**
  * Repository for property enumerations.
@@ -9,7 +10,7 @@ import {IPropertyEnumeration, PropertyEnumeration} from '../models/property/prop
 export class PropertyEnumerationRepository {
 	private adapter: JSONFile<IPropertyEnumeration[]>;
 	private db: Low<IPropertyEnumeration[]>;
-	private store: string = join('./store', 'properties', 'property-enumerations.json');
+	private store: string = join(storeDir, 'properties', 'property-enumerations.json');
 
 	/**
      * Initiated with a connection to the property set database.

@@ -51,9 +51,12 @@ export const managePropertySetsPrompt = async (): Promise<void> => {
 	case PropertySetAction.EDIT:
 		await promptWrapper(
 			selectPropertySetPrompt('Select the property set you want to edit'),
-			async (oldPropertySet: PropertySet) => await promptWrapper(
-				handleEditPropertySet(oldPropertySet),
-			),
+			async (oldPropertySet: PropertySet) => {
+				if (oldPropertySet === null) return await managePropertySetsPrompt();
+				return await promptWrapper(
+					handleEditPropertySet(oldPropertySet),
+				);
+			},
 			managePropertySetsPrompt,
 		);
 		await managePropertySetsPrompt();
@@ -69,10 +72,13 @@ export const managePropertySetsPrompt = async (): Promise<void> => {
 	case PropertySetAction.REMOVE:
 		await promptWrapper(
 			selectPropertySetPrompt('Select the property set you want to remove'),
-			async (propertySet: PropertySet) => await propertySetRepository.remove(propertySet),
+			async (propertySet: PropertySet) => {
+				if (propertySet === null) return await managePropertySetsPrompt();
+				return await propertySetRepository.remove(propertySet);
+			},
 			managePropertySetsPrompt,
 		);
-		await managePropertySetsPrompt(); // TODO: should list all property sets after deleting.
+		// TODO: should list all property sets after deleting.
 		break;
 	case PropertySetAction.BACK:
 		await handleMainMenu();

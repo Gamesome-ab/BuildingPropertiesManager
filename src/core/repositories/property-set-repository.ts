@@ -5,6 +5,7 @@ import {IPropertySet, PropertySet} from '../models/property-set/property-set.js'
 import {Property} from '../models/property/property.js';
 import {SimplePropertyRepository} from './simple-property-repository.js';
 import {PropertyRepositoriesWrapper} from './repositories-wrappers/property-repositories-wrapper.js';
+import {storeDir} from '../helpers/get-store-path.js';
 
 /**
  * Repository for property sets.
@@ -12,7 +13,7 @@ import {PropertyRepositoriesWrapper} from './repositories-wrappers/property-repo
 export class PropertySetRepository {
 	private adapter: JSONFile<IPropertySet[]>;
 	private db: Low<IPropertySet[]>;
-	private store: string = join('./store', 'property-sets.json');
+	private store: string = join(storeDir, 'property-sets.json');
 
 	/**
      * Initiated with a connection to the property set database.
